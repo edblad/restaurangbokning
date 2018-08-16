@@ -12,8 +12,8 @@ $statement = $pdo->prepare($query);
 $statement->execute();
 $bookings = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-var_dump ($bookings);
+//var_dump ($bookings);
 
+echo json_encode($bookings);
 
-echo 'hello';
 ?>
