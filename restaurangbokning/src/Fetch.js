@@ -1,22 +1,34 @@
 import React, { Component } from 'react';
 
 class Fetch extends Component {
-    
-    // state = {
-    //     data: ''
-    // }
 
-    render(){
+    state = {
+        data: []
+    }
+
+    componentDidMount() {
         fetch('http://localhost:8888/api.php')
         .then(response => response.json())
         .then((data) => {
-            this.setState({ data })
-            console.log(data)
+            this.setState({ data: data[0].booking_id })
+            console.log(data[0].booking_id)
         },
         (error) => {
             this.setState({ error })
         });
-        return (<div>Succeded</div>)
+        console.log(this.state.data)
+    }
+
+    render(){
+        const booking_id = this.state.data
+
+        return (
+            <div>
+                { booking_id }
+            </div>
+            
+
+        )
     }
 }
 
