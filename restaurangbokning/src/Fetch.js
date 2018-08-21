@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from './Button.js';
 
 class Fetch extends Component {
 
@@ -18,15 +19,25 @@ class Fetch extends Component {
         });
     }
 
-    render(){
+    startFetch = () => {
+
         const bookingArray = this.state.bookings;
         const bookingList = bookingArray.map((bookingSingle) => 
             <li key={bookingSingle.booking_id}>{bookingSingle.booking_id}</li>
         );
+        console.log(bookingList);
+
+        return bookingList;
+    }
+
+    render(){
 
         return (
             <div>
-                { bookingList }
+                
+                <Button onClick={this.startFetch} time="18:00"/>
+                
+
             </div>
             
 
