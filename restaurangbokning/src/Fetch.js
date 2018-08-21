@@ -4,7 +4,8 @@ import Button from './Button.js';
 class Fetch extends Component {
 
     state = {
-        bookings: []
+        bookings: [],
+        list: ''
     }
 
     componentDidMount() {
@@ -20,22 +21,26 @@ class Fetch extends Component {
     }
 
     startFetch = () => {
-
         const bookingArray = this.state.bookings;
         const bookingList = bookingArray.map((bookingSingle) => 
-            <li key={bookingSingle.booking_id}>{bookingSingle.booking_id}</li>
-        );
+        <li key={bookingSingle.booking_id}>{bookingSingle.booking_id}</li>);
+    
         console.log(bookingList);
 
-        return bookingList;
+        this.setState({
+            list: bookingList
+        })
     }
 
-    render(){
 
+    render(){
+        const list = this.state.list;
+        
         return (
             <div>
                 
                 <Button onClick={this.startFetch} time="18:00"/>
+                { list }
                 
 
             </div>
