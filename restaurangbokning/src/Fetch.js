@@ -3,28 +3,30 @@ import React, { Component } from 'react';
 class Fetch extends Component {
 
     state = {
-        data: []
+        bookings: []
     }
 
     componentDidMount() {
         fetch('http://localhost:8888/api.php')
         .then(response => response.json())
         .then((data) => {
-            this.setState({ data: data[0].booking_id })
-            console.log(data[0].booking_id)
+            this.setState({ bookings: data })
+            console.log(this.state.bookings)
         },
         (error) => {
             this.setState({ error })
         });
-        console.log(this.state.data)
     }
 
     render(){
-        const booking_id = this.state.data
+        const bookingArray = this.state.bookings;
+        const bookingList = bookingArray.map((bookingSingle) => 
+            <li key={bookingSingle.booking_id}>{bookingSingle.booking_id}</li>
+        );
 
         return (
             <div>
-                { booking_id }
+                { bookingList }
             </div>
             
 
