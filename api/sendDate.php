@@ -1,12 +1,20 @@
 <?php
 require 'database.php';
 
-$date = 'SELECT * FROM bookings WHERE time="18:00:00"';
+$selDate = $_POST["date"];
 
-$statement = $pdo->prepare($date);  
-$statement->execute();
-$selectedDate = $statement->fetchAll(PDO::FETCH_ASSOC);
+$my_sql = $pdo->prepare(
+    "INSERT INTO bookings (date)
+     VALUES ('$selDate')";
+ );
 
-echo json_encode($selectedDate);
+
+-- // $date = 'SELECT date FROM bookings WHERE date = $selDate';
+
+-- // $statement = $pdo->prepare($date);  
+-- // $statement->execute();
+-- // $selectedDate = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+-- // echo json_encode($selectedDate);
 
 ?>
