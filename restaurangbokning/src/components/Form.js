@@ -5,28 +5,23 @@ import Button from '../Button.js';
 class Form extends Component {
 
     state = {
-        tables: 15,
-        date: "",
+        date: '',
+        time: ''
     }
 
     handleSearch = (event) => {
         event.preventDefault();
 
-        // fetch('http://localhost:8888/sendDate.php', {
-        //     method: 'POST',
-        //     body: this.state.date,
-        //   });
         const selectedDate = this.state.date; 
-        // const tables = this.state.tables;
 
-        fetch('http://localhost:8888/sendDate.php?date=' + selectedDate/* + '&tables=' + tables*/)
+        fetch('http://localhost:8888/searchDate.php?date=' + selectedDate)
         .then(response => response.json())
         .then((data) => {
-            console.log(data)
+            console.log(data.length)
         });
 
         console.log(this.state.date);
-    }        
+    }
 
     handleChange = (event) => {
         this.setState({ date: event.target.value })
