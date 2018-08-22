@@ -71,8 +71,8 @@ class Fetch extends Component {
         return (
             <div>
                 
-                <Button onClick={this.firstSitting} time="18:00"/>
-                <Button onClick={this.secondSitting} time="21:00"/>
+                <Button onClick={this.firstSitting} text="18:00"/>
+                <Button onClick={this.secondSitting} text="21:00"/>
                 <ul>{ list }</ul>
                 
 
