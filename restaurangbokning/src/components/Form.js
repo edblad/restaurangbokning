@@ -8,22 +8,30 @@ class Form extends Component {
         date: "",
     }
 
-    handleSearch = () => {
-        //this.setState({ date: selectedDate.value })
+    handleSearch = (event) => {
+        event.preventDefault();
+        
+        fetch('http://localhost:8888/sendDate.php', {
+        method: 'POST',
+        body: this.state.date,
+        });
+        console.log(this.state.date);
+    }        
 
 
-    }
     handleChange = (event) => {
         this.setState({ date: event.target.value })
-        console.log(this.state.date);
     }
 
     render(){
         return (
             <form>
-                <Input id="this.selectedDate" value={this.state.date} type="date" onChange={this.handleChange}/>
+                <Input  id="this.selectedDate" 
+                        value={this.state.date} 
+                        type="date" 
+                        onChange={this.handleChange} />
                 <Button text="Search"
-                        />
+                        onClick={this.handleSearch} />
             </form>
         )
     }
