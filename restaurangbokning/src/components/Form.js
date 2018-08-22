@@ -5,24 +5,26 @@ import Button from '../Button.js';
 class Form extends Component {
 
     state = {
+        tables: 15,
         date: "",
     }
 
     handleSearch = (event) => {
         event.preventDefault();
 
-        fetch('http://localhost:8888/sendDate.php', {
-            method: 'POST',
-            body: this.state.date,
-          });
-        
-        // fetch('http://localhost:8888/sendDate.php?date='+this.state.date)
-        // .then(function (response) {
-        //     return response.text();
-        // })
-        // .then(function (body) {
-        //     console.log(body);
-        // });
+        // fetch('http://localhost:8888/sendDate.php', {
+        //     method: 'POST',
+        //     body: this.state.date,
+        //   });
+        const selectedDate = this.state.date; 
+        // const tables = this.state.tables;
+
+        fetch('http://localhost:8888/sendDate.php?date=' + selectedDate/* + '&tables=' + tables*/)
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data)
+        });
+
         console.log(this.state.date);
     }        
 
