@@ -5,9 +5,9 @@ import './booking.css';
 
 const Booking = () => (
   <div className="page-booking">
-    booking
-    <header className="App-header" />
-    <p className="App-intro">Resturang</p>
+    Please book your table here
+    <header className="app-header" />
+    <p className="app-intro">Restaurang</p>
     <Form />
     <Fetch />
   </div>
