@@ -1,20 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import Fetch from './Fetch.js';
-import Form from './components/Form';
 import { Switch, Route, Link } from 'react-router-dom';
-
-const Home = () => (
-  <div>home</div>
-);
-
-const Booking = () => (
-  <div>booking</div>
-);
-
-const Contact = () => (
-  <div>contact</div>
-);
+import Home from './pages/home/home';
+import Booking from './pages/booking/booking';
+import Contact from './pages/contact/contact';
 
 class App extends Component {
   render() {
@@ -28,17 +17,8 @@ class App extends Component {
           <Route path='/booking' component={Booking}/>
           <Route path='/contact' component={Contact}/>
         </Switch>
-
-        <header className="App-header">
-        </header>
-        <p className="App-intro">
-Resturang        </p>
-        <Form />
-        <Fetch />
-
       </div>
     );
   }
 }
-
 export default App;

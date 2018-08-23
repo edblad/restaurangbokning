@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Input from './Input.js';
-import Button from '../Button.js';
+import Input from './../input/input';
+import Button from './../button/button';
 
 class Form extends Component {
 
@@ -33,7 +33,7 @@ class Form extends Component {
                 }
 
                 console.log("Number of 18: ", firstSitting);
-                console.log("Number of 21: ", secondSitting);   
+                console.log("Number of 21: ", secondSitting);
             }
         });
 
@@ -47,10 +47,10 @@ class Form extends Component {
     render(){
         return (
             <form>
-                <Input  id="this.selectedDate" 
-                        value={this.state.date} 
-                        type="date" 
-                        onChange={this.handleChange} 
+                <Input  id="this.selectedDate"
+                        value={this.state.date}
+                        type="date"
+                        onChange={this.handleChange}
                         name="date" />
                 <Button text="Search"
                         onClick={this.handleSearch} />

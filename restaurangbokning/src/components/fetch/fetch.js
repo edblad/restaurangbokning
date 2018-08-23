@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Button from './Button.js';
+import Button from './../button/button';
 
 class Fetch extends Component {
 
@@ -43,20 +43,20 @@ class Fetch extends Component {
         (error) => {
             this.setState({ error })
         });
-        
+
         this.displayBookingList();
     }
 
     displayBookingList = () => {
 
         const bookingArray = this.state.bookings;
-        const bookingList = bookingArray.map((bookingSingle) => 
+        const bookingList = bookingArray.map((bookingSingle) =>
         <li key={bookingSingle.booking_id}>
             ID: {bookingSingle.booking_id}
-            Date: {bookingSingle.date} 
+            Date: {bookingSingle.date}
             Time: {bookingSingle.time}
         </li>);
-    
+
         console.log(bookingList);
 
         this.setState({
@@ -67,17 +67,17 @@ class Fetch extends Component {
 
     render(){
         const list = this.state.list;
-        
+
         return (
             <div>
-                
+
                 <Button onClick={this.firstSitting} text="18:00"/>
                 <Button onClick={this.secondSitting} text="21:00"/>
                 <ul>{ list }</ul>
-                
+
 
             </div>
-            
+
 
         )
     }
