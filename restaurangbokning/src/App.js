@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 //import Fetch from './Fetch.js';
-import Form from './components/Form';
+import Booking from './Booking';
 
 class App extends Component {
   render() {
@@ -12,7 +12,7 @@ class App extends Component {
         </header>
         <p className="App-intro">
 Resturang        </p>
-        <Form />
+        <Booking />
        
         
       </div>
