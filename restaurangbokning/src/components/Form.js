@@ -17,9 +17,23 @@ class Form extends Component {
         fetch('http://localhost:8888/searchDate.php?date=' + selectedDate)
         .then(response => response.json())
         .then((data) => {
-            console.log(data.length)
-            if(data.length < 15){
-                console.log('boka')
+            const timeList = data.map((singleTime) => singleTime.time);
+
+            let firstSitting = 0;
+            let secondSitting = 0;
+
+            if(data.length < 30){
+                for(let time of timeList) {
+                    if (time === '18:00:00') {
+                        firstSitting++;
+                    }
+                    else {
+                        secondSitting++;
+                    }
+                }
+
+                console.log("Number of 18: ", firstSitting);
+                console.log("Number of 21: ", secondSitting);   
             }
         });
 

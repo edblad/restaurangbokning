@@ -3,7 +3,7 @@ require 'database.php';
 
 $selDate = $_GET['date'];
 
-$date = 'SELECT date FROM bookings WHERE date = "' . $selDate . '"';
+$date = 'SELECT date, time FROM bookings WHERE date = "' . $selDate . '"';
 
 $statement = $pdo->prepare($date);  
 $statement->execute();
