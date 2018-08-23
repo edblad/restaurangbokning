@@ -6,7 +6,9 @@ class Form extends Component {
 
     state = {
         date: '',
-        time: ''
+        time: '',
+        selectedTime: '',
+        isButtonHidden: true
     }
 
     handleSearch = (event) => {
@@ -33,8 +35,14 @@ class Form extends Component {
                 }
 
                 console.log("Number of 18: ", firstSitting);
-                console.log("Number of 21: ", secondSitting);   
+                console.log("Number of 21: ", secondSitting); 
+                if(firstSitting < 15) {
+                    this.setState({ isButtonHidden: false })
+
+                }
             }
+
+        
         });
 
         console.log(this.state.date);
@@ -44,7 +52,16 @@ class Form extends Component {
         this.setState({ date: event.target.value })
     }
 
+    handleTimeSitting = (event) => {
+        event.preventDefault();
+        this.setState({ selectedTime: event.target.value })
+    }
+
+
     render(){
+
+        const style = this.state.isButtonHidden ? { display: 'none'} : {};
+
         return (
             <form>
                 <Input  id="this.selectedDate" 
@@ -54,6 +71,9 @@ class Form extends Component {
                         name="date" />
                 <Button text="Search"
                         onClick={this.handleSearch} />
+
+                <Button onClick={this.handleTimeSitting} text="18:00" value="18:00:00" style={style} />
+                <Button onClick={this.handleTimeSitting} text="21:00" value="21:00:00" style={style} />
             </form>
         )
     }

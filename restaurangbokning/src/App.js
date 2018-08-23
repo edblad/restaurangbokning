@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Fetch from './Fetch.js';
+//import Fetch from './Fetch.js';
 import Form from './components/Form';
 
 class App extends Component {
@@ -13,7 +13,7 @@ class App extends Component {
         <p className="App-intro">
 Resturang        </p>
         <Form />
-        <Fetch />
+       
         
       </div>
     );
