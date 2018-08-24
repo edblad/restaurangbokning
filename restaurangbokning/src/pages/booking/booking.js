@@ -1,6 +1,5 @@
 import React from 'react';
-import Fetch from './../../components/fetch/fetch';
-import Form from './../../components/form/form';
+import BookingForm from './../../components/bookingform/bookingform';
 import './booking.css';
 
 const Booking = () => (
@@ -8,8 +7,7 @@ const Booking = () => (
     Please book your table here
     <header className="app-header" />
     <p className="app-intro">Restaurang</p>
-    <Form />
-    <Fetch />
+    <BookingForm />
   </div>
 );
 
