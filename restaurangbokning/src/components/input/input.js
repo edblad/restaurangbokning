@@ -2,7 +2,7 @@ import React from 'react';
 
 function Input(props){
     return (
-        <input type={ props.type } value= { props.value } onChange={ props.onChange }/>
+        <input id={ props.id } type={ props.type } value={ props.value } onChange={ props.onChange }/>
     )
 }
 
