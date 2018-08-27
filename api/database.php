@@ -7,4 +7,4 @@ $pdo = new PDO(
     "root",
     "root"
     );
-?> 
+?>
