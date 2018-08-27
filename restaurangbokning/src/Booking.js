@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Form from './components/Form';
-import Input from './components/Input';
-import Button from './components/Button';
+import Form from './components/form/Form';
+import Input from './components/input/Input';
+import Button from './components/button/Button';
 
 class Booking extends Component {
 
