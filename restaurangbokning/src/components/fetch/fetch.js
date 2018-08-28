@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Button from './../button/button';
+import Button from '../button/button';
 
 class Fetch extends Component {
 
@@ -9,78 +9,73 @@ class Fetch extends Component {
     }
 
     componentDidMount() {
-        // const firstSitting = 'firstSitting.php';
-        // const secondSitting = 'secondSitting.php';
+        fetch('http://localhost:8888/fetchAllBookings.php')
+            .then(response => response.json())
+            .then((data) => {
+                this.setState({ bookings: data })
+                console.log("this.state.bookings: ", this.state.bookings);
+                this.displayBookingList();
+            },
+            (error) => {
+                this.setState({ error })
+            });
+        }
 
-        // fetch('http://localhost:8888/')
-        // .then(response => response.json())
-        // .then((data) => {
-        //     this.setState({ bookings: data })
-        //     console.log(this.state.bookings)
-        // },
-        // (error) => {
-        //     this.setState({ error })
-        // });
-    }
-
-    firstSitting = () => {
-        const url = 'firstSitting.php';
-        this.startFetch(url);
-    }
-
-    secondSitting = () => {
-        const url = 'secondSitting.php';
-        this.startFetch(url);
-    }
-
-    startFetch = (url) => {
-        fetch('http://localhost:8888/' + url)
-        .then(response => response.json())
-        .then((data) => {
-            this.setState({ bookings: data })
-            console.log(this.state.bookings)
-        },
-        (error) => {
-            this.setState({ error })
-        });
-
-        this.displayBookingList();
-    }
+    handleDelete = (event) => {
+        event.preventDefault();
+  
+        const selectedBooking = event.target.value;
+        console.log(this.state);
+        
+        fetch('http://localhost:8888/deleteBooking.php' ,{ 
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(selectedBooking)
+              })
+            
+            .then((deletedBooking) => {
+            console.log('Booking success: ', deletedBooking);
+        })
+        }
+        
+    
 
     displayBookingList = () => {
 
         const bookingArray = this.state.bookings;
         const bookingList = bookingArray.map((bookingSingle) =>
         <li key={bookingSingle.booking_id}>
-            ID: {bookingSingle.booking_id}
             Date: {bookingSingle.date}
             Time: {bookingSingle.time}
+            Name: {bookingSingle.name}
+            Amount: {bookingSingle.amount_of_people}
+            <Button value={bookingSingle.booking_id} text="X" onClick={this.handleDelete} />
         </li>);
 
-        console.log(bookingList);
+        console.log("BookingList: ", bookingList);
 
         this.setState({
             list: bookingList
         })
+    
     }
-
 
     render(){
         const list = this.state.list;
 
         return (
             <div>
-
-                <Button onClick={this.firstSitting} text="18:00"/>
-                <Button onClick={this.secondSitting} text="21:00"/>
-                <ul>{ list }</ul>
-
-
+            hej
+            <ul>{list}</ul>
             </div>
 
 
         )
     }
+
 }
 
 export default Fetch;

@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import Home from './pages/home/home';
 import Booking from './pages/booking/booking';
 import Contact from './pages/contact/contact';
+import Admin from './pages/admin/admin';
 import Menu from './components/menu/menu';
 
 class App extends Component {
@@ -15,6 +16,7 @@ class App extends Component {
           <Route exact path='/' component={Home}/>
           <Route path='/booking' component={Booking}/>
           <Route path='/contact' component={Contact}/>
+          <Route path='/admin' component={Admin}/>
         </Switch>
       </div>
     );
