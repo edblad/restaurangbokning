@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Form from './../form/form';
 import Input from './../input/input';
 import Button from './../button/button';
+import BookingContainer from './bookingContainer';
+import BookingLabel from './../label/bookingLabel';
+import './bookingform.css';
 
 class Bookingform extends Component {
 
@@ -16,7 +19,8 @@ class Bookingform extends Component {
         isSecondButtonHidden: true,
         isCustomerFormHidden: true,
         isFeedbackHidden: true,
-        isBookingHidden: false
+        isBookingHidden: false,
+        isSearchFormHidden: false
     }
 
     handleSearch = (event) => {
@@ -74,7 +78,8 @@ class Bookingform extends Component {
         event.preventDefault();
         this.setState({
             time: event.target.value,
-            isCustomerFormHidden: false
+            isCustomerFormHidden: false,
+            isSearchFormHidden: true
         })
     }
 
@@ -130,60 +135,100 @@ class Bookingform extends Component {
         const customerFormStyle = this.state.isCustomerFormHidden ? { display: 'none'} : {};
         const feedbackStyle = this.state.isFeedbackHidden ? { display: 'none'} : {};
         const bookingFormStyle = this.state.isBookingHidden ? { display: 'none'} : {};
+        const searchFormStyle = this.state.isSearchFormHidden ? { display: 'none'} : {};
 
         return (
-            <div>
-                <div style={bookingFormStyle}>
-                    <Form>
-                        <Input  id="this.selectedDate"
-                                value={this.state.date}
-                                type="date"
-                                onChange={this.handleChange}
-                                name="date" />
-                        <Button text="Search"
-                                onClick={this.handleSearch} />
+            <BookingContainer>
+                <div className="inner-wrap">
+                    <div style={bookingFormStyle}>
+                    <BookingLabel text="Reservation"/>
+                        <div style={searchFormStyle}>
+                            <Form className="secondary-background">
+                                <span>Date</span>
+                                <Input  id="this.selectedDate"
+                                        className="search-date"
+                                        value={this.state.date}
+                                        type="date"
+                                        onChange={this.handleChange}
+                                        name="date" />
+                                <Button className="button primary" text="Search"
+                                        onClick={this.handleSearch}/>
+                            </Form>
+                            
+                            <Button className="button secondary"
+                                    onClick={this.handleTimeSitting}
+                                    text="18:00" value="18:00:00"
+                                    style={firstButtonStyle} />
+                            <Button className="button secondary"
+                                    onClick={this.handleTimeSitting}
+                                    text="21:00" value="21:00:00"
+                                    style={secondButtonStyle} />
+                        </div>
 
-                        <Button onClick={this.handleTimeSitting}
-                                text="18:00" value="18:00:00"
-                                style={firstButtonStyle} />
-                        <Button onClick={this.handleTimeSitting}
-                                text="21:00" value="21:00:00"
-                                style={secondButtonStyle} />
-                    </Form>
-                    <Form style={customerFormStyle}>
-                        <label htmlFor="name">Name</label>
-                        <Input id="name" type="text" name="name" onChange={this.handleName} />
+                        <Form   className="customer-form"
+                                style={customerFormStyle}>
+                            {/* <label htmlFor="name">Name</label> */}
+                            <Input  id="name" 
+                                    className="customer-field"
+                                    placeholder="Name"
+                                    type="text"
+                                    name="name"
+                                    onChange={this.handleName} />
 
-                        <label htmlFor="email">E-mail</label>
-                        <Input id="email" type="email" name="email" onChange={this.handleEmail} />
+                            {/* <label htmlFor="email">E-mail</label> */}
+                            <Input  id="email"
+                                    className="customer-field"
+                                    placeholder="E-mail"
+                                    type="email"
+                                    name="email"
+                                    onChange={this.handleEmail} />
 
-                        <label htmlFor="phone">Phone</label>
-                        <Input id="phone" type="text" name="phone" onChange={this.handlePhone} />
+                            {/* <label htmlFor="phone">Phone</label> */}
+                            <Input  id="phone"
+                                    className="customer-field"
+                                    placeholder="Phone"
+                                    type="text"
+                                    name="phone"
+                                    onChange={this.handlePhone} />
 
-                        <label htmlFor="numberOfGuests">Number of guests</label>
-                        <select id="numberOfGuests" onChange={this.handleGuests}>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                        </select>
+                            <label  htmlFor="numberOfGuests">Number of guests</label>
+                            <div classname="custom-select">
+                                <select id="numberOfGuests"
+                                        className="select-guests"
+                                        onChange={this.handleGuests}>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                            </div>
 
-                        <Button text="Book" onClick={this.handleBooking} />
-                    </Form>
+                            <Button text="Book" 
+                                    className="button secondary"
+                                    onClick={this.handleBooking} />
+                            <Button text="Cancel"
+                                    className="button ghost" />
+                        </Form>
+                    </div> 
+
+                    <div  style={feedbackStyle}>
+                        <BookingLabel text="See you soon!" />
+                        <ul className="secondary-background">
+                            <li>{this.state.name}</li>
+                            <li>{this.state.phone}</li>
+                            <li>{this.state.email}</li>
+                            <li>{this.state.date}</li>
+                            <li>{this.state.time}</li>
+                            <li>{this.state.numberOfGuests}</li>
+                        </ul>
+                        <Button text="Back"
+                                className="button secondary" />
+                    </div>
                 </div>
-                <div style={feedbackStyle}>
-                    <h3>Thank you for your booking</h3>
-                    <ul>
-                        <li>{this.state.name}</li>
-                        <li>{this.state.phone}</li>
-                        <li>{this.state.email}</li>
-                        <li>{this.state.date}</li>
-                        <li>{this.state.guests}</li>
-                    </ul>
-                </div>
-            </div>
+            </BookingContainer>
+            
         )
     }
 }
