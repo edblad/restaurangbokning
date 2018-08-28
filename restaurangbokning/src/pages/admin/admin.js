@@ -1,7 +1,10 @@
 import React from 'react';
+import Fetch from './../../components/fetch/fetch';
 
 const Admin = () => (
-  <div>Admin</div>
+    <div>Admin
+        <Fetch />
+    </div>
 );
 
 export default Admin;

@@ -1,12 +1,12 @@
 <?php
 require 'database.php';
 
-$fetchFirstSitting = 'SELECT * FROM bookings INNER JOIN customer ON bookings.customer_id = customer.customer_id';
+$fetchAllBookings = 'SELECT * FROM bookings INNER JOIN customer ON bookings.customer_id = customer.customer_id';
 
-$statement = $pdo->prepare($fetchFirstSitting);  
+$statement = $pdo->prepare($fetchAllBookings);  
 $statement->execute();
-$firstSittingBookings = $statement->fetchAll(PDO::FETCH_ASSOC);
+$allBookings = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-echo json_encode($firstSittingBookings);
+echo json_encode($allBookings);
 
 ?>
