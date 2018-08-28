@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css?family=Special+Elite');
+
+/*-----------------------------
+           BUTTONS
+-------------------------------*/
+
+.button {
+    font-family: 'Special Elite', cursive;
+    color: #fff;
+    padding: 1.2em 3.5em;
+    border: none;
+    cursor: pointer;
+}
+
+.primary {
+    background-color: #045562;
+}
+
+.secondary {
+    background-color:#000;
+    width: 100%;
+    margin: 8px 0;
+}
+
+.ghost {
+    color: #000;
+    background: transparent;
+    width: 100%;
+    margin: 8px 0;
+    border: 1px solid #000;
+}
+/*-----------------------------
+           WRAPS
+-------------------------------*/
+.inner-wrap {
+    font-family: 'Special Elite', cursive;
+    margin: 0 10%;
+    width: 80%;
+}
+
+.feedback-wrap {
+    background-color: #f3f3f3;
+}
+
+/*-----------------------------
+           FORMS
+-------------------------------*/
+
+.secondary-background {
+    background-color: #f3f3f3;
+    padding: 24px 0;
+}
+
+.secondary-background li {
+    list-style-type: none;
+}
+
+.customer-form {
+    text-align: left;
+}
+
+.customer-field {
+    font-size: 0.8em;
+    background: transparent;
+    width: 100%;
+    margin: 16px 0;
+    padding-bottom: 8px;
+    border: 0;
+    outline: 0;
+    border-bottom: 1px solid #B7B7B7;
+}
+
+input::placeholder {
+    font-family: 'Special Elite', cursive;
+}
+/*-----------------------------
+           DATE PICKER
+-------------------------------*/
+.search-date {
+    font-size: 1em;
+    padding: 10px;
+    border: none;   
+    outline: none; 
+}
+
+::-webkit-inner-spin-button { 
+    display: none; 
+}
+
+::-webkit-datetime-edit-text { 
+    padding: 0 0.3em; 
+}
+
+::-webkit-calendar-picker-indicator { 
+    font-size: 1.5em;
+}
+
+

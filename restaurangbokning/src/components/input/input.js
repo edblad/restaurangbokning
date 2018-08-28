@@ -1,8 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 function Input(props){
     return (
-        <input id={ props.id } type={ props.type } value={ props.value } onChange={ props.onChange }/>
+        <input  id={ props.id }
+                className={props.className}
+                placeholder={props.placeholder}
+                type={ props.type } 
+                value={ props.value } 
+                onChange={ props.onChange }/>
     )
 }
 
