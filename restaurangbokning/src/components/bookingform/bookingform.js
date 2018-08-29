@@ -165,8 +165,8 @@ class Bookingform extends Component {
                                     style={secondButtonStyle} />
                         </div>
 
-                        <Form   className="customer-form"
-                                style={customerFormStyle}>
+                        <Form className="customer-form"
+                              style={customerFormStyle}>
                             {/* <label htmlFor="name">Name</label> */}
                             <Input  id="name" 
                                     className="customer-field"
@@ -210,8 +210,10 @@ class Bookingform extends Component {
                                     onClick={this.handleBooking} />
                             <Button text="Cancel"
                                     className="button ghost" />
+                            </div>
                         </Form>
                     </div> 
+                    
 
                     <div  style={feedbackStyle}>
                         <BookingLabel text="See you soon!" />
