@@ -68,7 +68,6 @@ class Fetch extends Component {
 
         return (
             <div>
-            hej
             <ul>{list}</ul>
             </div>
 
