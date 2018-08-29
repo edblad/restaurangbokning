@@ -51,7 +51,10 @@ class Fetch extends Component {
                 <td>{booking.time}</td>
                 <td>{booking.name}</td>
                 <td>{booking.amount_of_people}</td>
-                <td><Button value={booking.customer_id} text="X" onClick={this.handleDelete} /></td>
+                <td>
+                    <Button value={booking.customer_id} text="X" onClick={this.handleDelete} />
+                    <Button value={booking.booking_id} text="Edit" onClick={this.handleEdit} />
+                </td>
             </tr>
         );
 
