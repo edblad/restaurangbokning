@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Button from '../button/button';
+import './fetch.css';
 
 class Fetch extends Component {
 
@@ -28,27 +29,28 @@ class Fetch extends Component {
 
             fetch('http://localhost:8888/deleteBooking.php?id=' + selectedDelete)
             .then(response => response.json())
+            .catch((err) => {
+                console.log(err.message)
+            });
         }
 
+
     displayBookingList = () => {
-
         const bookingArray = this.state.bookings;
-        const bookingList = bookingArray.map((bookingSingle) =>
-        <li key={bookingSingle.booking_id}>
-            Date: {bookingSingle.date}
-            Time: {bookingSingle.time}
-            Name: {bookingSingle.name}
-            Amount: {bookingSingle.amount_of_people}
-            Customer ID: {bookingSingle.customer_id}
-            <Button value={bookingSingle.customer_id} text="X" onClick={this.handleDelete} />
-        </li>);
 
-        console.log("BookingList: ", bookingList);
+        const bookingList = bookingArray.map((booking) =>
+            <tr key={booking.customer_id}>
+                <td>{booking.date}</td>
+                <td>{booking.time}</td>
+                <td>{booking.name}</td>
+                <td>{booking.amount_of_people}</td>
+                <td><Button value={booking.customer_id} text="X" onClick={this.handleDelete} /></td>
+            </tr>
+        );
 
         this.setState({
             list: bookingList
         })
-    
     }
 
     render(){
@@ -56,13 +58,21 @@ class Fetch extends Component {
 
         return (
             <div>
-            <ul>{list}</ul>
+                <table>  
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Name</th>
+                            <th>Guests</th>
+                            <th>X</th>
+                        </tr>
+                    </thead>
+                    <tbody>{list}</tbody>
+                </table>
             </div>
-
-
         )
     }
-
 }
 
 export default Fetch;
