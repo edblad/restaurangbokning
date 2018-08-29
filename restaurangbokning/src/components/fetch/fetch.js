@@ -21,8 +21,16 @@ class Fetch extends Component {
                 this.setState({ error })
             });
         }
+    
+    handleEdit = (event) => {
+        event.preventDefault();
+        const selectedBooking = event.target.value;
+        console.log(selectedBooking);
 
-        handleDelete = (event) => {
+        
+    }
+        
+    handleDelete = (event) => {
             event.preventDefault();
             console.log("id: ", event.target.value)
             const selectedDelete = event.target.value;
@@ -33,8 +41,7 @@ class Fetch extends Component {
                 console.log(err.message)
             });
         }
-
-
+    
     displayBookingList = () => {
         const bookingArray = this.state.bookings;
 
