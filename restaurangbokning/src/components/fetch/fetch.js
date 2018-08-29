@@ -20,15 +20,23 @@ class Fetch extends Component {
                 this.setState({ error })
             });
         }
+    
+    handleEdit = (event) => {
+        event.preventDefault();
+        const selectedBooking = event.target.value;
+        console.log(selectedBooking);
 
-        handleDelete = (event) => {
+        
+    }
+        
+    handleDelete = (event) => {
             event.preventDefault();
             console.log("id: ", event.target.value)
             const selectedDelete = event.target.value;
 
             fetch('http://localhost:8888/deleteBooking.php?id=' + selectedDelete)
             .then(response => response.json())
-        }
+    }
 
     displayBookingList = () => {
 
@@ -41,6 +49,7 @@ class Fetch extends Component {
             Amount: {bookingSingle.amount_of_people}
             Customer ID: {bookingSingle.customer_id}
             <Button value={bookingSingle.customer_id} text="X" onClick={this.handleDelete} />
+            <Button value={bookingSingle.booking_id} text="Edit" onClick={this.handleEdit} />
         </li>);
 
         console.log("BookingList: ", bookingList);
