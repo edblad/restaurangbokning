@@ -192,7 +192,7 @@ class Bookingform extends Component {
                                     onChange={this.handlePhone} />
 
                             <label  htmlFor="numberOfGuests">Number of guests</label>
-                            <div classname="custom-select">
+                            <div className="custom-select">
                                 <select id="numberOfGuests"
                                         className="select-guests"
                                         onChange={this.handleGuests}>

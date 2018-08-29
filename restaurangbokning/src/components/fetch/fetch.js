@@ -39,7 +39,15 @@ class Fetch extends Component {
             .then((deletedBooking) => {
             console.log('Booking success: ', deletedBooking);
         })
-        }
+    }
+    
+    handleEdit = (event) => {
+        event.preventDefault();
+        const selectedBooking = event.target.value;
+        console.log(selectedBooking);
+
+        
+    }
         
     
 
@@ -53,6 +61,7 @@ class Fetch extends Component {
             Name: {bookingSingle.name}
             Amount: {bookingSingle.amount_of_people}
             <Button value={bookingSingle.booking_id} text="X" onClick={this.handleDelete} />
+            <Button value={bookingSingle.booking_id} text="Edit" onClick={this.handleEdit} />
         </li>);
 
         console.log("BookingList: ", bookingList);
