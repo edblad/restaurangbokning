@@ -26,31 +26,9 @@ class Fetch extends Component {
             console.log("id: ", event.target.value)
             const selectedDelete = event.target.value;
 
-            fetch("http://localhost:8888/deleteBooking.php?id=" + selectedDelete)
-            .then(response => response.json(console.log(response)))
+            fetch('http://localhost:8888/deleteBooking.php?id=' + selectedDelete)
+            .then(response => response.json())
         }
-
-    // handleDelete = (event) => {
-    //     event.preventDefault();
-  
-    //     const selectedBooking = event.target.value;
-    //     console.log(this.state);
-        
-    //     fetch('http://localhost:8888/deleteBooking.php' ,{ 
-    //         method: 'DELETE',
-    //         headers: {
-    //             'Accept': 'application/json',
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(selectedBooking)
-    //           })
-            
-    //         .then((deletedBooking) => {
-    //         console.log('Booking success: ', deletedBooking);
-    //     })
-    // }
-        
-    
 
     displayBookingList = () => {
 
