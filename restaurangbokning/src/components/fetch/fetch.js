@@ -21,25 +21,34 @@ class Fetch extends Component {
             });
         }
 
-    handleDelete = (event) => {
-        event.preventDefault();
-  
-        const selectedBooking = event.target.value;
-        console.log(this.state);
-        
-        fetch('http://localhost:8888/deleteBooking.php' ,{ 
-            method: 'DELETE',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(selectedBooking)
-              })
-            
-            .then((deletedBooking) => {
-            console.log('Booking success: ', deletedBooking);
-        })
+        handleDelete = (event) => {
+            event.preventDefault();
+            console.log("id: ", event.target.value)
+            const selectedDelete = event.target.value;
+
+            fetch("http://localhost:8888/deleteBooking.php?id=" + selectedDelete)
+            .then(response => response.json(console.log(response)))
         }
+
+    // handleDelete = (event) => {
+    //     event.preventDefault();
+  
+    //     const selectedBooking = event.target.value;
+    //     console.log(this.state);
+        
+    //     fetch('http://localhost:8888/deleteBooking.php' ,{ 
+    //         method: 'DELETE',
+    //         headers: {
+    //             'Accept': 'application/json',
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(selectedBooking)
+    //           })
+            
+    //         .then((deletedBooking) => {
+    //         console.log('Booking success: ', deletedBooking);
+    //     })
+    // }
         
     
 
@@ -52,7 +61,8 @@ class Fetch extends Component {
             Time: {bookingSingle.time}
             Name: {bookingSingle.name}
             Amount: {bookingSingle.amount_of_people}
-            <Button value={bookingSingle.booking_id} text="X" onClick={this.handleDelete} />
+            Customer ID: {bookingSingle.customer_id}
+            <Button value={bookingSingle.customer_id} text="X" onClick={this.handleDelete} />
         </li>);
 
         console.log("BookingList: ", bookingList);
