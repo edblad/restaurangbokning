@@ -18,7 +18,6 @@ class AdminList extends Component {
         numberOfGuests: '1',
         bookingId: '',
         isReservationHidden: true
-
     }
 
     componentDidMount() {
@@ -32,23 +31,26 @@ class AdminList extends Component {
             (error) => {
                 this.setState({ error })
             });
-        }
+    }
 
     handleAddReservation = (event) => {
             event.preventDefault();
         
         this.setState({
             isReservationHidden: false
-            });
-        }
+        });
+    }
     
     handleEdit = (event) => {
-        const selectedBooking = event.target.value;
-        console.log(selectedBooking);
-
-        // this.setState({
-        //     date: 
-        // })
+        this.setState({
+            date: document.getElementById('date_' + event.target.value).value,
+            time: document.getElementById('time_' + event.target.value).value,
+            name: document.getElementById('name_' + event.target.value).value,
+            phone: document.getElementById('phone_' + event.target.value).value,
+            email: document.getElementById('email_' + event.target.value).value,
+            numberOfGuests: document.getElementById('numberOfGuests_' + event.target.value).value,
+            bookingId: event.target.value
+        })
     }
         
     handleDelete = (event) => {
@@ -113,13 +115,13 @@ class AdminList extends Component {
         const bookingArray = this.state.bookings;
 
         const bookingList = bookingArray.map((booking) =>
-            <tr key={booking.customer_id} id={booking.customer_id}>
-                <td>{booking.date}<Input type="text" value={booking.date} onChange={this.handleDate} /></td>
-                <td>{booking.time}<Input type="text" value={booking.time} onChange={this.handleTimeSitting} /></td>
-                <td>{booking.name}<Input type="text" value={booking.name} onChange={this.handleName} /></td>
-                <td>{booking.email}<Input type="email" value={booking.email} onChange={this.handleEmail} /></td>
-                <td>{booking.phone}<Input type="text" value={booking.phone} onChange={this.handlePhone} /></td>
-                <td>{booking.amount_of_people}<Input type="text" value={booking.amount_of_people} onChange={this.handleGuests} /></td>
+            <tr key={booking.customer_id}>
+                <td>{booking.date}<Input id={'date_' + booking.customer_id} type="text" value={booking.date} onChange={this.handleDate} /></td>
+                <td>{booking.time}<Input id={'time_' + booking.customer_id} type="text" value={booking.time} onChange={this.handleTimeSitting} /></td>
+                <td>{booking.name}<Input id={'name_' + booking.customer_id} type="text" value={booking.name} onChange={this.handleName} /></td>
+                <td>{booking.email}<Input id={'email_' + booking.customer_id} type="email" value={booking.email} onChange={this.handleEmail} /></td>
+                <td>{booking.phone}<Input id={'phone_' + booking.customer_id} type="text" value={booking.phone} onChange={this.handlePhone} /></td>
+                <td>{booking.amount_of_people}<Input id={'numberOfGuests_' + booking.customer_id} type="text" value={booking.amount_of_people} onChange={this.handleGuests} /></td>
                 <td>
                     <Button value={booking.customer_id} text="X" onClick={this.handleDelete} />
                     <Button value={booking.customer_id} text="Edit" onClick={this.handleEdit} />
