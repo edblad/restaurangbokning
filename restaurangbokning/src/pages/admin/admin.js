@@ -4,7 +4,8 @@ import BookingForm from './../../components/bookingform/bookingform';
 
 
 const Admin = () => (
-    <div>Admin
+    <div>
+        Admin
         <Fetch />
         <BookingForm />
     </div>
