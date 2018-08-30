@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Button from '../button/button';
 import Input from '../input/input';
 import './adminlist.css';
+import BookingForm from './../../components/bookingform/bookingform';
+
 
 class AdminList extends Component {
 
@@ -14,7 +16,9 @@ class AdminList extends Component {
         phone: '',
         email: '',
         numberOfGuests: '1',
-        bookingId: ''
+        bookingId: '',
+        isReservationHidden: true
+
     }
 
     componentDidMount() {
@@ -27,6 +31,14 @@ class AdminList extends Component {
             },
             (error) => {
                 this.setState({ error })
+            });
+        }
+
+    handleAddReservation = (event) => {
+            event.preventDefault();
+        
+        this.setState({
+            isReservationHidden: false
             });
         }
     
@@ -123,6 +135,8 @@ class AdminList extends Component {
 
     render(){
         const list = this.state.list;
+        const addReservationStyle = this.state.isReservationHidden ? { display: 'none'} : {};
+
 
         return (
             <div className="table-wrap">
@@ -132,13 +146,24 @@ class AdminList extends Component {
                             <th>Date</th>
                             <th>Time</th>
                             <th>Name</th>
-                            <th>E-mail</th>
-                            <th>Phone</th>
                             <th>Guests</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>{list}</tbody>
+                    <tbody>
+                        {list}
+                            <tr>
+                                <th>
+                                    <td><Button text="Add Reservation"
+                                    onClick={this.handleAddReservation}/></td>
+                                </th>
+                            </tr>
+                            <tr>
+                                <div style={addReservationStyle}>
+                                    <BookingForm />
+                                </div>
+                            </tr>
+                    </tbody>
                 </table>
             </div>
         )
