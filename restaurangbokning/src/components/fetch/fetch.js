@@ -45,6 +45,16 @@ class Fetch extends Component {
     displayBookingList = () => {
         const bookingArray = this.state.bookings;
 
+        // this.setState = ({
+        //     date: '',
+        //     time: '',
+        //     name: '',
+        //     phone: '',
+        //     email: '',
+        //     numberOfGuests: '1',
+        //     bookingId: ''
+        // });
+
         const bookingList = bookingArray.map((booking) =>
             <tr key={booking.customer_id}>
                 <td>{booking.date}</td>
@@ -67,7 +77,7 @@ class Fetch extends Component {
         const list = this.state.list;
 
         return (
-            <div>
+            <div className="table-wrap">
                 <table>  
                     <thead>
                         <tr>
@@ -75,7 +85,7 @@ class Fetch extends Component {
                             <th>Time</th>
                             <th>Name</th>
                             <th>Guests</th>
-                            <th>X</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>{list}</tbody>
