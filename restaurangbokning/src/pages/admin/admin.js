@@ -1,5 +1,5 @@
 import React from 'react';
-import Fetch from './../../components/fetch/fetch';
+import AdminList from './../../components/adminlist/adminlist';
 //import BookingForm from './../../components/bookingform/bookingform';
 import './admin.css';
 
@@ -7,7 +7,7 @@ import './admin.css';
 const Admin = () => (
     <div className="admin-wrap">
         <h2>Admin</h2>
-        <Fetch />
+        <AdminList />
         {/* <BookingForm /> */}
     </div>
 );

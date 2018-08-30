@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Button from '../button/button';
 import Input from '../input/input';
-import './fetch.css';
+import './adminlist.css';
 
-class Fetch extends Component {
+class AdminList extends Component {
 
     state = {
         bookings: [],
@@ -31,7 +31,6 @@ class Fetch extends Component {
         }
     
     handleEdit = (event) => {
-        event.preventDefault();
         const selectedBooking = event.target.value;
         console.log(selectedBooking);
 
@@ -53,7 +52,6 @@ class Fetch extends Component {
     }
 
     handleSave = (event) => {
-        event.preventDefault();
         const selectedEdit = event.target.value;
         console.log(selectedEdit)
 
@@ -78,7 +76,6 @@ class Fetch extends Component {
     }
 
     handleTimeSitting = (event) => {
-        event.preventDefault();
         this.setState({
             time: event.target.value,
         })
@@ -148,4 +145,4 @@ class Fetch extends Component {
     }
 }
 
-export default Fetch;
+export default AdminList;
