@@ -41,6 +41,12 @@ class Fetch extends Component {
                 console.log(err.message)
             });
         }
+
+    handleAddReservation = (event) => {
+            event.preventDefault();
+            console.log("XD")
+
+        }
     
     displayBookingList = () => {
         const bookingArray = this.state.bookings;
@@ -61,10 +67,8 @@ class Fetch extends Component {
                 <td>{booking.time}</td>
                 <td>{booking.name}</td>
                 <td>{booking.amount_of_people}</td>
-                <td>
-                    <Button value={booking.customer_id} text="X" onClick={this.handleDelete} />
-                    <Button value={booking.booking_id} text="Edit" onClick={this.handleEdit} />
-                </td>
+                <td><Button value={booking.customer_id} text="X" onClick={this.handleDelete} />
+                    <Button value={booking.booking_id} text="Edit" onClick={this.handleEdit} /></td>
             </tr>
         );
 
@@ -88,7 +92,10 @@ class Fetch extends Component {
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>{list}</tbody>
+                    <tbody>{list}
+                    <th><Button className="button primary" text="Add Reservation"
+                            onClick={this.handleAddReservation}/></th>
+                    </tbody>
                 </table>
             </div>
         )
