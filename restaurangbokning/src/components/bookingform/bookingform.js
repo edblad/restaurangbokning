@@ -52,8 +52,6 @@ class Bookingform extends Component {
                     }
                 }
 
-                console.log("Number of 18: ", firstSitting);
-                console.log("Number of 21: ", secondSitting);
                 if(firstSitting < 15) {
                     this.setState({ isFirstButtonHidden: false })
                 }
@@ -61,11 +59,7 @@ class Bookingform extends Component {
                     this.setState({ isSecondButtonHidden: false })
                 }
             }
-
-
         });
-
-        console.log(this.state.date);
     }
 
     handleDate = (event) => {
@@ -125,6 +119,23 @@ class Bookingform extends Component {
             isCustomerFormHidden: false,
             isFeedbackHidden: false,
             isBookingHidden: true
+        })
+    }
+
+    handleBack = () => {
+        this.setState({ 
+            date: '',
+            time: '',
+            name: '',
+            phone: '',
+            email: '',
+            numberOfGuests: '1',
+            isFirstButtonHidden: true,
+            isSecondButtonHidden: true,
+            isCustomerFormHidden: true,
+            isFeedbackHidden: true,
+            isBookingHidden: false,
+            isSearchFormHidden: false
         })
     }
 
@@ -226,7 +237,8 @@ class Bookingform extends Component {
                             <li>{this.state.numberOfGuests}</li>
                         </ul>
                         <Button text="Back"
-                                className="button secondary" />
+                                className="button secondary"
+                                onClick={this.handleBack} />
                     </div>
                 </div>
             </BookingContainer>
