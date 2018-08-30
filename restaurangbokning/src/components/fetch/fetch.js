@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import Button from '../button/button';
 import './fetch.css';
+import BookingForm from './../../components/bookingform/bookingform';
+
 
 class Fetch extends Component {
 
     state = {
         bookings: [],
-        list: ''
+        list: '',
+        isReservationHidden: true
+
     }
 
     componentDidMount() {
@@ -44,8 +48,10 @@ class Fetch extends Component {
 
     handleAddReservation = (event) => {
             event.preventDefault();
-            console.log("XD")
-
+        
+        this.setState({
+            isReservationHidden: false
+        });
         }
     
     displayBookingList = () => {
@@ -79,6 +85,8 @@ class Fetch extends Component {
 
     render(){
         const list = this.state.list;
+        const addReservationStyle = this.state.isReservationHidden ? { display: 'none'} : {};
+
 
         return (
             <div className="table-wrap">
@@ -92,11 +100,20 @@ class Fetch extends Component {
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>{list}
-                    <th><Button className="button primary" text="Add Reservation"
-                            onClick={this.handleAddReservation}/></th>
+                    <tbody>
+                        {list}
+                        <tr>
+                            <th>
+                                <td><Button text="Add Reservation"
+                                onClick={this.handleAddReservation}/></td>
+                            </th>
+                        </tr>
+                            <div style={addReservationStyle}>
+                                    <BookingForm />
+                            </div>
                     </tbody>
                 </table>
+
             </div>
         )
     }
