@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Button from '../button/button';
+import Form from './../../components/form/form';
 import './fetch.css';
 
 class Fetch extends Component {
@@ -14,7 +15,6 @@ class Fetch extends Component {
             .then(response => response.json())
             .then((data) => {
                 this.setState({ bookings: data })
-                console.log("this.state.bookings: ", this.state.bookings);
                 this.displayBookingList();
             },
             (error) => {
@@ -24,10 +24,10 @@ class Fetch extends Component {
     
     handleEdit = (event) => {
         event.preventDefault();
-        const selectedBooking = event.target.value;
-        console.log(selectedBooking);
+        const selectedEdit = event.target.value;
+        console.log(selectedEdit);
 
-        
+
     }
         
     handleDelete = (event) => {
@@ -75,11 +75,13 @@ class Fetch extends Component {
                             <th>Time</th>
                             <th>Name</th>
                             <th>Guests</th>
-                            <th>X</th>
+                            <th>Delete/Edit</th>
                         </tr>
                     </thead>
                     <tbody>{list}</tbody>
                 </table>
+                <div>
+                </div>
             </div>
         )
     }
