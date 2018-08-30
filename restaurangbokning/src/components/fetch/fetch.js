@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import Button from '../button/button';
+import Input from '../input/input';
 import './fetch.css';
 
 class Fetch extends Component {
 
     state = {
         bookings: [],
-        list: ''
+        list: '',
+        date: '',
+        time: '',
+        name: '',
+        phone: '',
+        email: '',
+        numberOfGuests: '1',
+        bookingId: ''
     }
 
     componentDidMount() {
@@ -27,43 +35,86 @@ class Fetch extends Component {
         const selectedBooking = event.target.value;
         console.log(selectedBooking);
 
-        
+        // this.setState({
+        //     date: 
+        // })
     }
         
     handleDelete = (event) => {
-            event.preventDefault();
-            console.log("id: ", event.target.value)
-            const selectedDelete = event.target.value;
+        event.preventDefault();
+        console.log("id: ", event.target.value)
+        const selectedDelete = event.target.value;
 
-            fetch('http://localhost:8888/deleteBooking.php?id=' + selectedDelete)
-            .then(response => response.json())
-            .catch((err) => {
-                console.log(err.message)
-            });
-        }
+        fetch('http://localhost:8888/deleteBooking.php?id=' + selectedDelete)
+        .then(response => response.json())
+        .catch((err) => {
+            console.log(err.message)
+        });
+    }
+
+    handleSave = (event) => {
+        event.preventDefault();
+        const selectedEdit = event.target.value;
+        console.log(selectedEdit)
+
+        // fetch('http://localhost:8888/insertBooking.php',
+        // {
+        //     method: "POST",
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(booking)
+        // })
+        // .then((postedBooking) => {
+        //     console.log('Booking success: ', postedBooking);
+        // })
+    }
+
+    handleDate = (event) => {
+        this.setState({
+            date: event.target.value
+        })
+    }
+
+    handleTimeSitting = (event) => {
+        event.preventDefault();
+        this.setState({
+            time: event.target.value,
+        })
+    }
+
+    handleName = (event) => {
+        this.setState({ name: event.target.value })
+    }
+
+    handlePhone = (event) => {
+        this.setState({ phone: event.target.value })
+    }
+
+    handleEmail = (event) => {
+        this.setState({ email: event.target.value })
+    }
+
+    handleGuests = (event) => {
+        this.setState({ numberOfGuests: event.target.value })
+    }
     
     displayBookingList = () => {
         const bookingArray = this.state.bookings;
 
-        // this.setState = ({
-        //     date: '',
-        //     time: '',
-        //     name: '',
-        //     phone: '',
-        //     email: '',
-        //     numberOfGuests: '1',
-        //     bookingId: ''
-        // });
-
         const bookingList = bookingArray.map((booking) =>
-            <tr key={booking.customer_id}>
-                <td>{booking.date}</td>
-                <td>{booking.time}</td>
-                <td>{booking.name}</td>
-                <td>{booking.amount_of_people}</td>
+            <tr key={booking.customer_id} id={booking.customer_id}>
+                <td>{booking.date}<Input type="text" value={booking.date} onChange={this.handleDate} /></td>
+                <td>{booking.time}<Input type="text" value={booking.time} onChange={this.handleTimeSitting} /></td>
+                <td>{booking.name}<Input type="text" value={booking.name} onChange={this.handleName} /></td>
+                <td>{booking.email}<Input type="email" value={booking.email} onChange={this.handleEmail} /></td>
+                <td>{booking.phone}<Input type="text" value={booking.phone} onChange={this.handlePhone} /></td>
+                <td>{booking.amount_of_people}<Input type="text" value={booking.amount_of_people} onChange={this.handleGuests} /></td>
                 <td>
                     <Button value={booking.customer_id} text="X" onClick={this.handleDelete} />
-                    <Button value={booking.booking_id} text="Edit" onClick={this.handleEdit} />
+                    <Button value={booking.customer_id} text="Edit" onClick={this.handleEdit} />
+                    <Button value={booking.customer_id} text="Save" onClick={this.handleSave} />
                 </td>
             </tr>
         );
@@ -84,6 +135,8 @@ class Fetch extends Component {
                             <th>Date</th>
                             <th>Time</th>
                             <th>Name</th>
+                            <th>E-mail</th>
+                            <th>Phone</th>
                             <th>Guests</th>
                             <th>Action</th>
                         </tr>

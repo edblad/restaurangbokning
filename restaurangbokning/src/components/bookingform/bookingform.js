@@ -68,7 +68,7 @@ class Bookingform extends Component {
         console.log(this.state.date);
     }
 
-    handleChange = (event) => {
+    handleDate = (event) => {
         this.setState({
             date: event.target.value
         })
@@ -149,7 +149,7 @@ class Bookingform extends Component {
                                         className="search-date"
                                         value={this.state.date}
                                         type="date"
-                                        onChange={this.handleChange}
+                                        onChange={this.handleDate}
                                         name="date" />
                                 <Button className="button primary" text="Search"
                                         onClick={this.handleSearch}/>
