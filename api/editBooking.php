@@ -22,7 +22,7 @@ $bookingStatement->execute(array(
 $editCustomer = 'UPDATE customer 
                  SET name = :name, 
                      phone = :phone, 
-                     email = :email,
+                     email = :email
                  WHERE customer_id = :customer_id';
 
 $customerStatement = $pdo->prepare($editCustomer);
