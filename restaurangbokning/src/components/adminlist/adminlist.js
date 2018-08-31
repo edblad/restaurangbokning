@@ -19,8 +19,7 @@ class AdminList extends Component {
             numberOfGuests: '1',
             customerId: ''
         },
-        isReservationHidden: true,
-        isInputHidden: true
+        isReservationHidden: true
     }
 
     componentDidMount() {
@@ -59,16 +58,49 @@ class AdminList extends Component {
     handleEdit = (event) => {
         this.setState({
             booking: {
-                date: document.getElementById('date_' + event.target.value).value,
-                time: document.getElementById('time_' + event.target.value).value,
-                name: document.getElementById('name_' + event.target.value).value,
-                phone: document.getElementById('phone_' + event.target.value).value,
-                email: document.getElementById('email_' + event.target.value).value,
-                numberOfGuests: document.getElementById('numberOfGuests_' + event.target.value).value,
+                date: document.getElementById('date_' + event.target.value).innerHTML,
+                time: document.getElementById('time_' + event.target.value).innerHTML,
+                name: document.getElementById('name_' + event.target.value).innerHTML,
+                phone: document.getElementById('phone_' + event.target.value).innerHTML,
+                email: document.getElementById('email_' + event.target.value).innerHTML,
+                numberOfGuests: document.getElementById('numberOfGuests_' + event.target.value).innerHTML,
                 customerId: event.target.value
-            },
-            isInputHidden: false
+            }
         })
+
+        const bookingArray = this.state.bookings;
+
+        const bookingList = bookingArray.map((booking) =>
+            <tr>
+                <td>
+                    <Input type="date" onChange={this.handleDate} />
+                </td>
+                <td>
+                    <Input type="text" onChange={this.handleTimeSitting} />
+                </td>
+                <td>
+                    <Input type="text" onChange={this.handleName} />
+                </td>
+                <td>
+                    <Input type="email" onChange={this.handleEmail} />
+                </td>
+                <td>
+                    <Input type="text" onChange={this.handlePhone} />
+                </td>
+                <td>
+                    <Input type="text" onChange={this.handleGuests} />
+                </td>
+                <td>
+                    <Button value={booking.customer_id} text="Save" onClick={this.handleSave} />
+                </td>
+            </tr>
+        );
+
+        this.setState({
+            list: bookingList
+        })
+
+        // this.displayBookingList();
     }
 
     handleSave = (event) => {
@@ -148,16 +180,14 @@ class AdminList extends Component {
     displayBookingList = () => {
         const bookingArray = this.state.bookings;
 
-        //const inputStyle = this.state.isInputHidden ? { display: 'none' } : {};
-
         const bookingList = bookingArray.map((booking) =>
             <tr key={booking.customer_id}>
-                <td>{booking.date}<Input id={'date_' + booking.customer_id} type="text" value={booking.date} onChange={this.handleDate} /></td>
-                <td>{booking.time}<Input id={'time_' + booking.customer_id} type="text" value={booking.time} onChange={this.handleTimeSitting} /></td>
-                <td>{booking.name}<Input id={'name_' + booking.customer_id} type="text" value={booking.name} onChange={this.handleName} /></td>
-                <td>{booking.email}<Input id={'email_' + booking.customer_id} type="email" value={booking.email} onChange={this.handleEmail} /></td>
-                <td>{booking.phone}<Input id={'phone_' + booking.customer_id} type="text" value={booking.phone} onChange={this.handlePhone} /></td>
-                <td>{booking.amount_of_people}<Input id={'numberOfGuests_' + booking.customer_id} type="text" value={booking.amount_of_people} onChange={this.handleGuests} /></td>
+                <td id={'date_' + booking.customer_id}>{booking.date}</td>
+                <td id={'time_' + booking.customer_id}>{booking.time}</td>
+                <td id={'name_' + booking.customer_id}>{booking.name}</td>
+                <td id={'email_' + booking.customer_id}>{booking.email}</td>
+                <td id={'phone_' + booking.customer_id}>{booking.phone}</td>
+                <td id={'numberOfGuests_' + booking.customer_id}>{booking.amount_of_people}</td>
                 <td>
                     <Button value={booking.customer_id} text="X" onClick={this.handleDelete} />
                     <Button value={booking.customer_id} text="Edit" onClick={this.handleEdit} />
