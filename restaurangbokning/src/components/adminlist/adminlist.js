@@ -10,14 +10,17 @@ class AdminList extends Component {
     state = {
         bookings: [],
         list: '',
-        date: '',
-        time: '',
-        name: '',
-        phone: '',
-        email: '',
-        numberOfGuests: '1',
-        bookingId: '',
-        isReservationHidden: true
+        booking: {
+            date: '',
+            time: '',
+            name: '',
+            phone: '',
+            email: '',
+            numberOfGuests: '1',
+            customerId: ''
+        },
+        isReservationHidden: true,
+        isInputHidden: true
     }
 
     componentDidMount() {
@@ -40,18 +43,6 @@ class AdminList extends Component {
             isReservationHidden: false
         });
     }
-    
-    handleEdit = (event) => {
-        this.setState({
-            date: document.getElementById('date_' + event.target.value).value,
-            time: document.getElementById('time_' + event.target.value).value,
-            name: document.getElementById('name_' + event.target.value).value,
-            phone: document.getElementById('phone_' + event.target.value).value,
-            email: document.getElementById('email_' + event.target.value).value,
-            numberOfGuests: document.getElementById('numberOfGuests_' + event.target.value).value,
-            bookingId: event.target.value
-        })
-    }
         
     handleDelete = (event) => {
         event.preventDefault();
@@ -65,54 +56,99 @@ class AdminList extends Component {
         });
     }
 
-    handleSave = (event) => {
-        const selectedEdit = event.target.value;
-        console.log(selectedEdit)
+    handleEdit = (event) => {
+        this.setState({
+            booking: {
+                date: document.getElementById('date_' + event.target.value).value,
+                time: document.getElementById('time_' + event.target.value).value,
+                name: document.getElementById('name_' + event.target.value).value,
+                phone: document.getElementById('phone_' + event.target.value).value,
+                email: document.getElementById('email_' + event.target.value).value,
+                numberOfGuests: document.getElementById('numberOfGuests_' + event.target.value).value,
+                customerId: event.target.value
+            },
+            isInputHidden: false
+        })
+    }
 
-        // fetch('http://localhost:8888/insertBooking.php',
-        // {
-        //     method: "POST",
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(booking)
-        // })
-        // .then((postedBooking) => {
-        //     console.log('Booking success: ', postedBooking);
-        // })
+    handleSave = (event) => {
+        event.preventDefault();
+        const selectedEdit = this.state.booking;
+        console.log(selectedEdit)
+        console.log(JSON.stringify(selectedEdit));
+
+        fetch('http://localhost:8888/editBooking.php',
+        {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(selectedEdit)
+        })
+        .then((editedBooking) => {
+            console.log('Edit success: ', editedBooking);
+        })
     }
 
     handleDate = (event) => {
         this.setState({
-            date: event.target.value
+            booking: {
+                ...this.state.booking,
+                date: event.target.value
+            }
         })
     }
 
     handleTimeSitting = (event) => {
         this.setState({
-            time: event.target.value,
+            booking: {
+                ...this.state.booking,
+                time: event.target.value
+            }
         })
     }
 
     handleName = (event) => {
-        this.setState({ name: event.target.value })
+        this.setState({ 
+            booking: {
+                ...this.state.booking,
+                name: event.target.value 
+            }
+        })
     }
 
     handlePhone = (event) => {
-        this.setState({ phone: event.target.value })
+        this.setState({ 
+            booking: {
+                ...this.state.booking,
+                phone: event.target.value 
+            }
+        })
     }
 
     handleEmail = (event) => {
-        this.setState({ email: event.target.value })
+        this.setState({ 
+            booking: {
+                ...this.state.booking,
+                email: event.target.value
+            } 
+        })
     }
 
     handleGuests = (event) => {
-        this.setState({ numberOfGuests: event.target.value })
+        this.setState({ 
+            booking: {
+                ...this.state.booking,
+                numberOfGuests: event.target.value 
+            }
+        })
     }
     
     displayBookingList = () => {
         const bookingArray = this.state.bookings;
+
+        //const inputStyle = this.state.isInputHidden ? { display: 'none' } : {};
 
         const bookingList = bookingArray.map((booking) =>
             <tr key={booking.customer_id}>
@@ -148,6 +184,8 @@ class AdminList extends Component {
                             <th>Date</th>
                             <th>Time</th>
                             <th>Name</th>
+                            <th>E-mail</th>
+                            <th>Phone</th>
                             <th>Guests</th>
                             <th>Action</th>
                         </tr>

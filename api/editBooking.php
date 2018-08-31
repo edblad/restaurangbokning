@@ -4,26 +4,33 @@ require 'database.php';
 $request_body = file_get_contents('php://input');
 $bookingData = json_decode($request_body);
 
-$editBooking = 'UPDATE FROM bookings 
-                SET $bookingData->date = :date, 
-                    $bookingData->time = :time, 
-                    $bookingData->numberOfGuests = :amount_of_people
-                WHERE customer_id = $bookingData->customerID';
+$editBooking = 'UPDATE bookings 
+                SET date = :date, 
+                    time = :time, 
+                    amount_of_people = :amount_of_people
+                WHERE customer_id = :customer_id';
 
-$bookingStatement = $pdo->prepare($bookingQuery);
+$bookingStatement = $pdo->prepare($editBooking);
 $bookingStatement->execute(array(
-    ":date" => $bookingData->date,
-    ":time" => $bookingData->time,
-    ":amount_of_people" => $bookingData->numberOfGuests
+    ':date' => $bookingData->date,
+    ':time' => $bookingData->time,
+    ':amount_of_people' => $bookingData->numberOfGuests,
+    ':customer_id' => $bookingData->customerId
 ));
 
-$editCustomer = 'UPDATE FROM customer SET ';
 
-$customerStatement = $pdo->prepare($customerQuery);
+$editCustomer = 'UPDATE customer 
+                 SET name = :name, 
+                     phone = :phone, 
+                     email = :email,
+                 WHERE customer_id = :customer_id';
+
+$customerStatement = $pdo->prepare($editCustomer);
 $customerStatement->execute(array(
-    ":name" => $bookingData->name,
-    ":phone" => $bookingData->phone,
-    ":email" => $bookingData->email
+    ':name' => $bookingData->name,
+    ':phone' => $bookingData->phone,
+    ':email' => $bookingData->email,
+    'customer_id' => $bookingData->customerId
 ));
 
 echo 'edited';
