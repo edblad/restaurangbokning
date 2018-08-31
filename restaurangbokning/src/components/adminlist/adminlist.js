@@ -98,7 +98,7 @@ class AdminList extends Component {
 
         this.setState({
             list: bookingList
-        })
+        });
 
         // this.displayBookingList();
     }
@@ -120,6 +120,11 @@ class AdminList extends Component {
         })
         .then((editedBooking) => {
             console.log('Edit success: ', editedBooking);
+
+            //var index = array.indexOf({editedBooking});
+
+            window.location.reload();             //KAN VI LÖSA DETTA PÅ ANNAT SÄTT?
+            this.displayBookingList();
         })
     }
 
@@ -191,7 +196,6 @@ class AdminList extends Component {
                 <td>
                     <Button value={booking.customer_id} text="X" onClick={this.handleDelete} />
                     <Button value={booking.customer_id} text="Edit" onClick={this.handleEdit} />
-                    <Button value={booking.customer_id} text="Save" onClick={this.handleSave} />
                 </td>
             </tr>
         );
