@@ -39,7 +39,7 @@ class Bookingform extends Component {
 
         const selectedDate = this.state.date;
 
-        fetch('http://localhost/MedieInstitutet/Working%20projects/blah/restaurangbokning/api/searchDate.php?date=' + selectedDate)
+        fetch('http://localhost:8888/searchDate.php?date=' + selectedDate)
         .then(response => response.json())
         .then((data) => {
             const timeList = data.map((singleTime) => singleTime.time);
@@ -134,7 +134,7 @@ class Bookingform extends Component {
 
         const booking = this.state;
 
-        fetch('http://localhost/MedieInstitutet/Working%20projects/blah/restaurangbokning/api/insertBooking.php',
+        fetch('http://localhost:8888/insertBooking.php',
         {
             method: "POST",
             headers: {
