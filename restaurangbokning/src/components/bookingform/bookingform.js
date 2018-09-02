@@ -39,7 +39,7 @@ class Bookingform extends Component {
 
         const selectedDate = this.state.date;
 
-        fetch('http://localhost:8888/searchDate.php?date=' + selectedDate)
+        fetch('http://localhost/MedieInstitutet/Working%20projects/blah/restaurangbokning/api/searchDate.php?date=' + selectedDate)
         .then(response => response.json())
         .then((data) => {
             const timeList = data.map((singleTime) => singleTime.time);
@@ -110,7 +110,7 @@ class Bookingform extends Component {
         }
 
         //Check if Phone number is filled in
-        if(this.state.phone.length <= 5){
+        if(this.state.phone.length <= 5 || isNaN(this.state.phone)){
           this.setState({ phoneError: true });
           anyError = true;
         }
@@ -134,7 +134,7 @@ class Bookingform extends Component {
 
         const booking = this.state;
 
-        fetch('http://localhost:8888/insertBooking.php',
+        fetch('http://localhost/MedieInstitutet/Working%20projects/blah/restaurangbokning/api/insertBooking.php',
         {
             method: "POST",
             headers: {
@@ -270,7 +270,7 @@ class Bookingform extends Component {
                                   name="gdpr" />
 
                                 <label  htmlFor="numberOfGuests">I consent to the processing of my personal data</label>
-                                {this.state.gdprError && <div className="errorMsg">*You will need to accept before booking</div>}
+                                {this.state.gdprError && <div className="errorMsg">*You need to accept before booking</div>}
 
 
                             <Button text="Book"
