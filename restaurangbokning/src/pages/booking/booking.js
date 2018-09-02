@@ -8,7 +8,7 @@ const BookingContent = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  height: 100vh;
+  height: calc(100vh - 49px);
 `;
 
 const Booking = () => (
