@@ -20,7 +20,12 @@ class Bookingform extends Component {
         isCustomerFormHidden: true,
         isFeedbackHidden: true,
         isBookingHidden: false,
-        isSearchFormHidden: false
+        isSearchFormHidden: false,
+        gdprCheck: false,
+        nameError: false,
+        phoneError: false,
+        emailError: false,
+        gdprError: false
     }
 
     handleSearch = (event) => {
@@ -78,27 +83,56 @@ class Bookingform extends Component {
     }
 
     handleName = (event) => {
-        this.setState({ name: event.target.value })
+        this.setState({ name: event.target.value, nameError: false });
     }
 
     handlePhone = (event) => {
-        this.setState({ phone: event.target.value })
+        this.setState({ phone: event.target.value, phoneError: false });
     }
 
     handleEmail = (event) => {
-        this.setState({ email: event.target.value })
+        this.setState({ email: event.target.value, emailError: false });
     }
 
     handleGuests = (event) => {
-        this.setState({ numberOfGuests: event.target.value })
+        this.setState({ numberOfGuests: event.target.value });
     }
 
     handleBooking = (event) => {
         event.preventDefault();
 
+        let anyError = false;
+
+        //Check if Name is filled in
+        if(this.state.name.length <= 0){
+          this.setState({ nameError: true });
+          anyError = true;
+        }
+
+        //Check if Phone number is filled in
+        if(this.state.phone.length <= 5){
+          this.setState({ phoneError: true });
+          anyError = true;
+        }
+
+        //Check if Email is filled in
+        if(this.state.email.length <= 0 || !this.state.email.includes("@")){
+          this.setState({ emailError: true });
+          anyError = true;
+        }
+
+        //Check if GDPR-checkbox is ticked
+        if(this.state.gdprCheck === false){
+          this.setState({ gdprError: true });
+          anyError = true;
+        }
+
+        if(anyError === true){
+          return;
+        }
+
+
         const booking = this.state;
-        console.log(booking);
-        console.log(JSON.stringify(booking));
 
         fetch('http://localhost:8888/insertBooking.php',
         {
@@ -123,7 +157,7 @@ class Bookingform extends Component {
     }
 
     handleBack = () => {
-        this.setState({ 
+        this.setState({
             date: '',
             time: '',
             name: '',
@@ -138,6 +172,12 @@ class Bookingform extends Component {
             isSearchFormHidden: false
         })
     }
+
+    handleGDPR = (event) => {
+    this.setState({
+      gdprCheck: event.target.checked, gdprError: false
+    });
+  }
 
     render(){
 
@@ -165,7 +205,7 @@ class Bookingform extends Component {
                                 <Button className="button primary" text="Search"
                                         onClick={this.handleSearch}/>
                             </Form>
-                            
+
                             <Button className="button secondary"
                                     onClick={this.handleTimeSitting}
                                     text="18:00" value="18:00:00"
@@ -179,12 +219,13 @@ class Bookingform extends Component {
                         <Form className="customer-form"
                               style={customerFormStyle}>
                             {/* <label htmlFor="name">Name</label> */}
-                            <Input  id="name" 
+                            <Input  id="name"
                                     className="customer-field"
                                     placeholder="Name"
                                     type="text"
                                     name="name"
                                     onChange={this.handleName} />
+                            {this.state.nameError && <div className="errorMsg">*Please fill in your name</div>}
 
                             {/* <label htmlFor="email">E-mail</label> */}
                             <Input  id="email"
@@ -193,6 +234,7 @@ class Bookingform extends Component {
                                     type="email"
                                     name="email"
                                     onChange={this.handleEmail} />
+                            {this.state.emailError && <div className="errorMsg">*Please enter a valid email</div>}
 
                             {/* <label htmlFor="phone">Phone</label> */}
                             <Input  id="phone"
@@ -201,8 +243,9 @@ class Bookingform extends Component {
                                     type="text"
                                     name="phone"
                                     onChange={this.handlePhone} />
+                            {this.state.phoneError && <div className="errorMsg">*Please enter a valid phone number</div>}
 
-                            <label  htmlFor="numberOfGuests">Number of guests</label>
+                            <label  htmlFor="numberOfGuests" className="guest-label">Number of guests</label>
 
                             <div className="custom-select">
                                 <select id="numberOfGuests"
@@ -216,15 +259,29 @@ class Bookingform extends Component {
                                     <option value="6">6</option>
                                 </select>
 
-                            <Button text="Book" 
+                                <br /><br /><br />
+                                <Input
+                                  id="gdpr"
+                                  className="customer-field"
+                                  placeholder="gdpr"
+                                  type="checkbox"
+                                  value={this.state.gdprCheck}
+                                  onChange={this.handleGDPR}
+                                  name="gdpr" />
+
+                                <label  htmlFor="numberOfGuests">I consent to the processing of my personal data</label>
+                                {this.state.gdprError && <div className="errorMsg">*You will need to accept before booking.</div>}
+
+
+                            <Button text="Book"
                                     className="button secondary"
                                     onClick={this.handleBooking} />
                             <Button text="Cancel"
                                     className="button ghost" />
                             </div>
                         </Form>
-                    </div> 
-                    
+                    </div>
+
 
                     <div  style={feedbackStyle}>
                         <BookingLabel text="See you soon!" />
@@ -242,7 +299,7 @@ class Bookingform extends Component {
                     </div>
                 </div>
             </BookingContainer>
-            
+
         )
     }
 }

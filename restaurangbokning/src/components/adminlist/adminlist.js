@@ -37,12 +37,12 @@ class AdminList extends Component {
 
     handleAddReservation = (event) => {
             event.preventDefault();
-        
+
         this.setState({
             isReservationHidden: false
         });
     }
-        
+
     handleDelete = (event) => {
         event.preventDefault();
         console.log("id: ", event.target.value)
@@ -147,41 +147,41 @@ class AdminList extends Component {
     }
 
     handleName = (event) => {
-        this.setState({ 
+        this.setState({
             booking: {
                 ...this.state.booking,
-                name: event.target.value 
+                name: event.target.value
             }
         })
     }
 
     handlePhone = (event) => {
-        this.setState({ 
+        this.setState({
             booking: {
                 ...this.state.booking,
-                phone: event.target.value 
+                phone: event.target.value
             }
         })
     }
 
     handleEmail = (event) => {
-        this.setState({ 
+        this.setState({
             booking: {
                 ...this.state.booking,
                 email: event.target.value
-            } 
+            }
         })
     }
 
     handleGuests = (event) => {
-        this.setState({ 
+        this.setState({
             booking: {
                 ...this.state.booking,
-                numberOfGuests: event.target.value 
+                numberOfGuests: event.target.value
             }
         })
     }
-    
+
     displayBookingList = () => {
         const bookingArray = this.state.bookings;
 
@@ -212,7 +212,7 @@ class AdminList extends Component {
 
         return (
             <div className="table-wrap">
-                <table>  
+                <table>
                     <thead>
                         <tr>
                             <th>Date</th>

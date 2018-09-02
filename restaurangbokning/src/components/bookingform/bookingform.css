@@ -29,6 +29,22 @@
     margin: 8px 0;
     border: 1px solid #000;
 }
+
+input#gdpr {
+    float: left;
+    width: 20px;
+    margin: 2px 5px;
+}
+
+.guest-label{
+  float: left;
+  margin: 3px 0px;
+}
+
+select#numberOfGuests{
+  margin: 1px 15px;
+  width: 40px;
+}
 /*-----------------------------
            WRAPS
 -------------------------------*/
@@ -73,26 +89,33 @@
 input::placeholder {
     font-family: 'Special Elite', cursive;
 }
+
+
+/*-----------------------------
+           ERROR MESSAGE
+-------------------------------*/
+.errorMsg {
+    color: red;
+    font-size: 11px;
+}
 /*-----------------------------
            DATE PICKER
 -------------------------------*/
 .search-date {
     font-size: 1em;
     padding: 10px;
-    border: none;   
-    outline: none; 
+    border: none;
+    outline: none;
 }
 
-::-webkit-inner-spin-button { 
-    display: none; 
+::-webkit-inner-spin-button {
+    display: none;
 }
 
-::-webkit-datetime-edit-text { 
-    padding: 0 0.3em; 
+::-webkit-datetime-edit-text {
+    padding: 0 0.3em;
 }
 
-::-webkit-calendar-picker-indicator { 
+::-webkit-calendar-picker-indicator {
     font-size: 1.5em;
 }
-
-
