@@ -270,7 +270,7 @@ class Bookingform extends Component {
                                   name="gdpr" />
 
                                 <label  htmlFor="numberOfGuests">I consent to the processing of my personal data</label>
-                                {this.state.gdprError && <div className="errorMsg">*You will need to accept before booking.</div>}
+                                {this.state.gdprError && <div className="errorMsg">*You will need to accept before booking</div>}
 
 
                             <Button text="Book"
