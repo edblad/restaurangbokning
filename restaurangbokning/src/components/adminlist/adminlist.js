@@ -6,20 +6,23 @@ import BookingForm from './../../components/bookingform/bookingform';
 
 
 class AdminList extends Component {
+    constructor(props) {
+        super(props);
 
-    state = {
-        bookings: [],
-        list: '',
-        booking: {
-            date: '',
-            time: '',
-            name: '',
-            phone: '',
-            email: '',
-            numberOfGuests: '1',
-            customerId: ''
-        },
-        isReservationHidden: true
+        this.state = {
+            bookings: [],
+            list: '',
+            booking: {
+                date: '',
+                time: '',
+                name: '',
+                phone: '',
+                email: '',
+                numberOfGuests: '1',
+                customerId: ''
+            },
+            isReservationHidden: true
+        }
     }
 
     componentDidMount() {
@@ -59,48 +62,119 @@ class AdminList extends Component {
     }
 
     handleEdit = (event) => {
-        this.setState({
-            booking: {
-                date: document.getElementById('date_' + event.target.value).innerHTML,
-                time: document.getElementById('time_' + event.target.value).innerHTML,
-                name: document.getElementById('name_' + event.target.value).innerHTML,
-                phone: document.getElementById('phone_' + event.target.value).innerHTML,
-                email: document.getElementById('email_' + event.target.value).innerHTML,
-                numberOfGuests: document.getElementById('numberOfGuests_' + event.target.value).innerHTML,
-                customerId: event.target.value
-            }
-        })
+        if (this.state.booking.name == '') {
+            this.setState({
+                booking: {
+                    date: document.getElementById('date_' + event.target.value).innerHTML,
+                    time: document.getElementById('time_' + event.target.value).innerHTML,
+                    name: document.getElementById('name_' + event.target.value).innerHTML,
+                    phone: document.getElementById('phone_' + event.target.value).innerHTML,
+                    email: document.getElementById('email_' + event.target.value).innerHTML,
+                    numberOfGuests: document.getElementById('numberOfGuests_' + event.target.value).innerHTML,
+                    customerId: event.target.value
+                }
+            });
+        }
+
+        console.log("handleEdit: ", this.state.booking);
 
         const bookingArray = this.state.bookings;
-        const bookingList = bookingArray.map((booking) =>
-            <tr id={'row_' + booking.customer_id}>
-                <td>
-                    <Input id={'date_' + booking.customer_id} type="text" placeholder={booking.date} onChange={this.handleDate} />
-                </td>
-                <td>
-                    <Input id={'time_' + booking.customer_id} type="text" placeholder={booking.time} onChange={this.handleTimeSitting} />
-                </td>
-                <td>
-                    <Input id={'name_' + booking.customer_id} type="text" placeholder={booking.name} onChange={this.handleName} />
-                </td>
-                <td>
-                    <Input id={'email_' + booking.customer_id} type="email" placeholder={booking.email} onChange={this.handleEmail} />
-                </td>
-                <td>
-                    <Input id={'phone_' + booking.customer_id} type="text" placeholder={booking.phone} onChange={this.handlePhone} />
-                </td>
-                <td>
-                    <Input id={'numberOfGuests_' + booking.customer_id} type="text" placeholder={booking.amount_of_people} onChange={this.handleGuests} />
-                </td>
-                <td>
-                    <Button value={booking.customer_id} text="Save" onClick={this.handleSave} />
-                </td>
-            </tr>
-        );
+        let bookingList = [];
+            
+        if (this.state.booking.name !== '') {
+            for(let i = 0; i < bookingArray.length; i++) {
+                if(bookingArray[i].customer_id == event.target.value) {
+                    console.log('ja' + this.state.booking.customerId);
+                    bookingList.push(
+                    (<tr id={'row_' + event.target.value} key={event.target.value}>
+                        <td>
+                            <Input id={'date_' + event.target.value} type="text" onChange={this.handleDate} />
+                        </td>
+                        <td>
+                            <Input id={'time_' + event.target.value} type="text" onChange={this.handleTimeSitting} />
+                        </td>
+                        <td>
+                            <input type="text" id={'name_' + this.state.booking.customerId} value={this.state.booking.name} type="text" onChange={this.handleName} />
+                        </td>
+                        <td>
+                            <Input id={'email_' + event.target.value} type="email" onChange={this.handleEmail} />
+                        </td>
+                        <td>
+                            <Input id={'phone_' + event.target.value} type="text" onChange={this.handlePhone} />
+                        </td>
+                        <td>
+                            <Input id={'numberOfGuests_' + event.target.value} type="text" onChange={this.handleGuests} />
+                        </td>
+                        <td>
+                            <Button value={event.target.value} text="Save" onClick={this.handleSave} />
+                        </td>
+                    </tr>)
+                    );
+
+                    
+                }
+            
+        
+            else {
+                console.log('nej' + bookingArray[i].customer_id);
+                bookingList.push(
+                (<tr id={'row_' + bookingArray[i].customer_id} key={bookingArray[i].customer_id}>
+                    <td id={'date_' + bookingArray[i].customer_id}>{bookingArray[i].date}</td>
+                    <td id={'time_' + bookingArray[i].customer_id}>{bookingArray[i].time}</td>
+                    <td id={'name_' + bookingArray[i].customer_id}>{bookingArray[i].name}</td>
+                    <td id={'email_' + bookingArray[i].customer_id}>{bookingArray[i].email}</td>
+                    <td id={'phone_' + bookingArray[i].customer_id}>{bookingArray[i].phone}</td>
+                    <td id={'numberOfGuests_' + bookingArray[i].customer_id}>{bookingArray[i].amount_of_people}</td>
+                    <td>
+                        <Button value={bookingArray[i].customer_id} text="X" onClick={this.handleDelete} />
+                        <Button value={bookingArray[i].customer_id} text="Edit" onClick={this.handleEdit} />
+                    </td>
+                </tr>)
+                );
+            }
+        }
 
         this.setState({
-            list: bookingList
+            list: bookingList,
+            
+            //name: bookingArray[i].name
         });
+    }
+    
+
+        // this.setState({
+        //     list: bookingList
+        // });
+
+        // const bookingList = bookingArray.map((booking) =>
+        //     <tr id={'row_' + booking.customer_id}>
+        //         <td>
+        //             <Input id={'date_' + booking.customer_id} type="text" placeholder={booking.date} onChange={this.handleDate} />
+        //         </td>
+        //         <td>
+        //             <Input id={'time_' + booking.customer_id} type="text" placeholder={booking.time} onChange={this.handleTimeSitting} />
+        //         </td>
+        //         <td>
+        //             <Input id={'name_' + booking.customer_id} type="text" placeholder={booking.name} onChange={this.handleName} />
+        //         </td>
+        //         <td>
+        //             <Input id={'email_' + booking.customer_id} type="email" placeholder={booking.email} onChange={this.handleEmail} />
+        //         </td>
+        //         <td>
+        //             <Input id={'phone_' + booking.customer_id} type="text" placeholder={booking.phone} onChange={this.handlePhone} />
+        //         </td>
+        //         <td>
+        //             <Input id={'numberOfGuests_' + booking.customer_id} type="text" placeholder={booking.amount_of_people} onChange={this.handleGuests} />
+        //         </td>
+        //         <td>
+        //             <Button value={booking.customer_id} text="Save" onClick={this.handleSave} />
+        //         </td>
+        //     </tr>
+        // );
+
+        // this.setState({
+        //     list: bookingList
+        // });
     }
 
     handleSave = (event) => {
@@ -144,12 +218,16 @@ class AdminList extends Component {
     }
 
     handleName = (event) => {
+        console.log(event.target.value);
+        console.log(this.state.booking.name);
         this.setState({
             booking: {
                 ...this.state.booking,
                 name: event.target.value
             }
-        })
+        });
+
+        console.log("handleName: ", this.state.booking.name);
     }
 
     handlePhone = (event) => {
