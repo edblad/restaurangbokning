@@ -73,24 +73,24 @@ class AdminList extends Component {
 
         const bookingArray = this.state.bookings;
         const bookingList = bookingArray.map((booking) =>
-            <tr>
+            <tr id={'row_' + booking.customer_id}>
                 <td>
-                    <Input id={'date_' + booking.customer_id} type="date" onChange={this.handleDate} />
+                    <Input id={'date_' + booking.customer_id} type="text" placeholder={booking.date} onChange={this.handleDate} />
                 </td>
                 <td>
-                    <Input id={'time_' + booking.customer_id} type="text" onChange={this.handleTimeSitting} />
+                    <Input id={'time_' + booking.customer_id} type="text" placeholder={booking.time} onChange={this.handleTimeSitting} />
                 </td>
                 <td>
-                    <Input id={'name_' + booking.customer_id} type="text" onChange={this.handleName} />
+                    <Input id={'name_' + booking.customer_id} type="text" placeholder={booking.name} onChange={this.handleName} />
                 </td>
                 <td>
-                    <Input id={'email_' + booking.customer_id} type="email" onChange={this.handleEmail} />
+                    <Input id={'email_' + booking.customer_id} type="email" placeholder={booking.email} onChange={this.handleEmail} />
                 </td>
                 <td>
-                    <Input id={'phone_' + booking.customer_id} type="text" onChange={this.handlePhone} />
+                    <Input id={'phone_' + booking.customer_id} type="text" placeholder={booking.phone} onChange={this.handlePhone} />
                 </td>
                 <td>
-                    <Input id={'numberOfGuests_' + booking.customer_id} type="text" onChange={this.handleGuests} />
+                    <Input id={'numberOfGuests_' + booking.customer_id} type="text" placeholder={booking.amount_of_people} onChange={this.handleGuests} />
                 </td>
                 <td>
                     <Button value={booking.customer_id} text="Save" onClick={this.handleSave} />
@@ -183,7 +183,7 @@ class AdminList extends Component {
         const bookingArray = this.state.bookings;
 
         const bookingList = bookingArray.map((booking) =>
-            <tr key={booking.customer_id}>
+            <tr id={'row_' + booking.customer_id}>
                 <td id={'date_' + booking.customer_id}>{booking.date}</td>
                 <td id={'time_' + booking.customer_id}>{booking.time}</td>
                 <td id={'name_' + booking.customer_id}>{booking.name}</td>
