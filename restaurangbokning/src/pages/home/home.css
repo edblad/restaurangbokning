@@ -1,3 +1,16 @@
-.page-home{
-  background-color: rgb(33, 150, 243);
+.page-home {
+  background-image: url(../../images/homepage@1900px.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: calc(100vh - 48px);
+  overflow: hidden;
 }
+
+.homeBox {
+  width: 500px;
+  height: 300px;
+  margin: auto;
+  margin-top:18%;
+}
+

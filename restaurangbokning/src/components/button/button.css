@@ -1,0 +1,46 @@
+.button {
+    /* font-family: 'Special Elite', cursive; */
+    font-family: 'Fira Mono', monospace;
+    color: #fff;
+    padding: 13px 38px;
+    border: none;
+    cursor: pointer;
+}
+
+.primary {
+    background-color: #045562;
+}
+
+.secondary {
+    background-color:#000;
+    border: 1px solid #000;
+    width: 100%;
+    margin: 8px 0;
+}
+
+.secondary:hover {
+    color: #000;
+    background: transparent;
+}
+
+.ghost {
+    color: #000;
+    background: transparent;
+    width: 100%;
+    margin: 8px 0;
+    border: 1px solid #000;
+}
+
+.ghost:hover {
+    color: #fff;
+    background: #000;
+}
+
+.homeButton {
+    padding: 16px 38px;
+    width: calc(100% - 258px);
+}
+
+.button.ghost.homeButton {
+    margin-right: 16px;
+}

@@ -1,3 +1,42 @@
-.page-contact{
-  background-color: rgb(240, 98, 146);
+.page-contact {
+  background: #FAFAFA;
+  height: 100vh;
+}
+
+.contactHeader {
+  background-image: url(../../images/contactpage@1900px.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  overflow: hidden;
+}
+
+.contactDetails {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: 16px auto;
+}
+
+.contactBox {
+  margin: auto;
+}
+
+.contactBox h2 {
+  text-transform: uppercase;
+  border-top: 3px solid #000;
+  border-bottom: 3px solid #000;
+  padding: 10px 0;
+  width: 250px;
+}
+
+.contactBox ul {
+  padding: 0;
+}
+
+.contactBox li {
+  /* font-family: 'Special Elite', cursive; */
+  font-family: 'Fira Mono', monospace;
+  margin: 16px 0;
 }
