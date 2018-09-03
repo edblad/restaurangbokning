@@ -23,6 +23,10 @@ class AdminList extends Component {
     }
 
     componentDidMount() {
+        this.fetchBookings();
+    }
+
+    fetchBookings = () => {
         fetch('http://localhost:8888/fetchAllBookings.php')
             .then(response => response.json())
             .then((data) => {
@@ -45,7 +49,6 @@ class AdminList extends Component {
 
     handleDelete = (event) => {
         event.preventDefault();
-        console.log("id: ", event.target.value)
         const selectedDelete = event.target.value;
 
         fetch('http://localhost:8888/deleteBooking.php?id=' + selectedDelete)
@@ -69,26 +72,25 @@ class AdminList extends Component {
         })
 
         const bookingArray = this.state.bookings;
-
         const bookingList = bookingArray.map((booking) =>
-            <tr>
+            <tr id={'row_' + booking.customer_id}>
                 <td>
-                    <Input type="date" onChange={this.handleDate} />
+                    <Input id={'date_' + booking.customer_id} type="text" placeholder={booking.date} onChange={this.handleDate} />
                 </td>
                 <td>
-                    <Input type="text" onChange={this.handleTimeSitting} />
+                    <Input id={'time_' + booking.customer_id} type="text" placeholder={booking.time} onChange={this.handleTimeSitting} />
                 </td>
                 <td>
-                    <Input type="text" onChange={this.handleName} />
+                    <Input id={'name_' + booking.customer_id} type="text" placeholder={booking.name} onChange={this.handleName} />
                 </td>
                 <td>
-                    <Input type="email" onChange={this.handleEmail} />
+                    <Input id={'email_' + booking.customer_id} type="email" placeholder={booking.email} onChange={this.handleEmail} />
                 </td>
                 <td>
-                    <Input type="text" onChange={this.handlePhone} />
+                    <Input id={'phone_' + booking.customer_id} type="text" placeholder={booking.phone} onChange={this.handlePhone} />
                 </td>
                 <td>
-                    <Input type="text" onChange={this.handleGuests} />
+                    <Input id={'numberOfGuests_' + booking.customer_id} type="text" placeholder={booking.amount_of_people} onChange={this.handleGuests} />
                 </td>
                 <td>
                     <Button value={booking.customer_id} text="Save" onClick={this.handleSave} />
@@ -99,8 +101,6 @@ class AdminList extends Component {
         this.setState({
             list: bookingList
         });
-
-        // this.displayBookingList();
     }
 
     handleSave = (event) => {
@@ -120,9 +120,6 @@ class AdminList extends Component {
         })
         .then((editedBooking) => {
             console.log('Edit success: ', editedBooking);
-
-            //var index = array.indexOf({editedBooking});
-
             window.location.reload();             //KAN VI LÖSA DETTA PÅ ANNAT SÄTT?
             this.displayBookingList();
         })
@@ -186,7 +183,7 @@ class AdminList extends Component {
         const bookingArray = this.state.bookings;
 
         const bookingList = bookingArray.map((booking) =>
-            <tr key={booking.customer_id}>
+            <tr id={'row_' + booking.customer_id}>
                 <td id={'date_' + booking.customer_id}>{booking.date}</td>
                 <td id={'time_' + booking.customer_id}>{booking.time}</td>
                 <td id={'name_' + booking.customer_id}>{booking.name}</td>
@@ -227,15 +224,13 @@ class AdminList extends Component {
                     <tbody>
                         {list}
                             <tr>
-                                <th>
-                                    <td><Button text="Add Reservation"
-                                    onClick={this.handleAddReservation}/></td>
-                                </th>
+                                <td><Button text="Add Reservation"
+                                onClick={this.handleAddReservation}/></td>
                             </tr>
                             <tr>
-                                <div style={addReservationStyle}>
+                                <td style={addReservationStyle}>
                                     <BookingForm />
-                                </div>
+                                </td>
                             </tr>
                     </tbody>
                 </table>
