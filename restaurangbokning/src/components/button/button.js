@@ -1,13 +1,5 @@
 import React from 'react';
-//import styled from 'styled-components';
-
-// const Button = styled.button`
-//     background-color: ${props => props.primary ? '#045562' : '#000'};
-//     color: ${props => props.primary ? '#fff' : '#fff'};
-
-//     padding: 1.2em 3.5em;
-//     border: none;
-// `;
+import './button.css';
 
 function Button(props) {
 

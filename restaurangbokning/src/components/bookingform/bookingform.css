@@ -1,35 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Special+Elite');
-
-/*-----------------------------
-           BUTTONS
--------------------------------*/
-
-.button {
-    font-family: 'Special Elite', cursive;
-    color: #fff;
-    padding: 1.2em 3.5em;
-    border: none;
-    cursor: pointer;
-}
-
-.primary {
-    background-color: #045562;
-}
-
-.secondary {
-    background-color:#000;
-    width: 100%;
-    margin: 8px 0;
-}
-
-.ghost {
-    color: #000;
-    background: transparent;
-    width: 100%;
-    margin: 8px 0;
-    border: 1px solid #000;
-}
-
 input#gdpr {
     float: left;
     width: 20px;
@@ -49,7 +17,9 @@ select#numberOfGuests{
            WRAPS
 -------------------------------*/
 .inner-wrap {
-    font-family: 'Special Elite', cursive;
+    /* font-family: 'Special Elite', cursive; */
+    font-family: 'Fira Mono', monospace;
+    text-align: center;
     margin: 0 10%;
     width: 80%;
 }
@@ -63,7 +33,7 @@ select#numberOfGuests{
 -------------------------------*/
 
 .secondary-background {
-    background-color: #f3f3f3;
+    background-color: #fff;
     padding: 24px 0;
 }
 
@@ -87,7 +57,8 @@ select#numberOfGuests{
 }
 
 input::placeholder {
-    font-family: 'Special Elite', cursive;
+    /* font-family: 'Special Elite', cursive; */
+    font-family: 'Fira Mono', monospace;
 }
 
 
@@ -103,6 +74,7 @@ input::placeholder {
 -------------------------------*/
 .search-date {
     font-size: 1em;
+    background: #f3f3f3;
     padding: 10px;
     border: none;
     outline: none;
