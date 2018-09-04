@@ -4,6 +4,7 @@ import Input from './../input/input';
 import Button from './../button/button';
 import BookingHeading from './../label/bookingHeading';
 import FormLabel from './../label/formLabel';
+import CancelBooking from './../cancelbooking/cancelbooking';
 import './bookingform.css';
 
 class Bookingform extends Component {
@@ -33,18 +34,19 @@ class Bookingform extends Component {
             gdprError: false,
             dateError: false,
             isFullyBooked: '',
-            error: false
+            error: false,
+            showCancelBooking: false
         }
         this.handleChange = this.handleChange.bind(this);
     }
-  
+
     handleSearch = (event) => {
         event.preventDefault();
-        
+
         // Only do this if there's a date chosen
-        if(this.state.booking.date){    
+        if(this.state.booking.date){
             const selectedDate = this.state.booking.date;
-    
+
             fetch('http://localhost:8888/searchDate.php?date=' + selectedDate)
             .then(response => response.json())
             .then((dateData) => {
@@ -87,7 +89,7 @@ class Bookingform extends Component {
                 this.setState({ isSecondButtonHidden: false })
             }
         }else{
-            this.setState({ 
+            this.setState({
                 isFullyBooked: <p>Today we are fully booked. Please try another day!</p>
                 });
         }
@@ -95,7 +97,7 @@ class Bookingform extends Component {
 
     handleBooking = (event) => {
         event.preventDefault();
-        
+
         let anyError = false;
 
         //Check if Name is filled in
@@ -171,7 +173,7 @@ class Bookingform extends Component {
 
     handleGDPR = (event) => {
         this.setState({
-            gdprCheck: event.target.checked, 
+            gdprCheck: event.target.checked,
             gdprError: false
         });
     }
@@ -197,7 +199,11 @@ class Bookingform extends Component {
             nameError: false,
             emailError: false,
             phoneError: false
-        })  
+        })
+    }
+
+    showCancelBooking = () => {
+      this.setState({ showCancelBooking: true });
     }
 
     render(){
@@ -318,6 +324,17 @@ class Bookingform extends Component {
                                 onClick={this.handleBack} />
                     </div>
                 </div>
+
+                {this.state.booking.date === '' && (<center>
+                <BookingHeading text="Cancel a reservation"/>
+                {!this.state.showCancelBooking && (<Button text="Cancel a reservation"
+                        className="button primary"
+                        onClick={this.showCancelBooking} />)}
+
+                  {this.state.showCancelBooking && (
+                    <div><CancelBooking /></div>
+                  )}
+                </center>)}
             </div>
 
         )
