@@ -7,6 +7,7 @@ import iconEdit from '../../images/iconEditDark.svg';
 import iconDelete from '../../images/iconDeleteDark.svg';
 import iconSave from '../../images/iconSaveDark.svg';
 
+
 class AdminList extends Component {
     constructor(props) {
         super(props);
@@ -54,7 +55,8 @@ class AdminList extends Component {
         this.setState({
             isReservationHidden: false
         });
-    }
+        
+                }
 
     handleDelete = (event) => {
         event.preventDefault();
@@ -109,6 +111,7 @@ class AdminList extends Component {
         if(this.state.mode === 'view') {
             return(
             <div className="table-wrap">
+                <Button text="Add Reservation" onClick={this.handleAddReservation}/>
                 <table>
                     <thead>
                         <tr>
@@ -150,16 +153,15 @@ class AdminList extends Component {
                             </tr>
                             )
                         }
-                            <tr>
-                                <td><Button text="Add Reservation" onClick={this.handleAddReservation}/></td>
-                            </tr>
-                            <tr>
-                                <td style={addReservationStyle}>
-                                    <BookingForm />
-                                </td>
-                            </tr>
                     </tbody>
                 </table>
+
+                        <div id="myModal" className="modal" style={addReservationStyle}>
+                                <div className="modal-content">
+                                    <span className="close" onClick={() => this.setState({isReservationHidden: true})}>&times;</span>
+                                <BookingForm />
+                            </div>
+                        </div>  
             </div>
             )
         } if(this.state.mode === 'edit') {
@@ -228,13 +230,11 @@ class AdminList extends Component {
                         <tr>
                             <td><Button text="Add Reservation" onClick={this.handleAddReservation}/></td>
                         </tr>
-                        <tr>
-                            <td style={addReservationStyle}>
-                                <BookingForm />
-                            </td>
-                        </tr>
+                
+
                     </tbody>
-                </table>
+                
+                </table>           
             </div> 
             )
         }              
