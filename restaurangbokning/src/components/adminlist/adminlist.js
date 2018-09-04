@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import Button from '../button/button';
 import Input from '../input/input';
-import BookingLabel from '../label/bookingLabel';
+import BookingHeading from '../label/bookingHeading';
 import './adminlist.css';
 import BookingForm from './../../components/bookingform/bookingform';
+import FormLabel from '../label/formLabel';
 import iconEdit from '../../images/iconEditDark.svg';
-import iconDelete from '../../images/iconDeleteDark.svg';
-import iconSave from '../../images/iconSaveDark.svg';
 
 
 class AdminList extends Component {
@@ -135,8 +134,6 @@ class AdminList extends Component {
                                 <td>{booking.phone}</td>
                                 <td>{booking.amount_of_people}</td>
                                 <td>
-                                    <Button value={booking.customer_id} 
-                                            onClick={this.handleDelete} />
                                     <button value={booking.customer_id} 
                                             onClick={this.handleDelete}
                                             className="iconDelete" />   
@@ -162,51 +159,57 @@ class AdminList extends Component {
                     <div className="modal-content-edit">
                         <span className="close" onClick={() => this.setState({isEditHidden: true})}>&times;</span>
                         <div className="inner-modal">
-                        <BookingLabel text="Edit booking" />
+                            <BookingHeading text="Edit booking" />
 
-                        <label className="editFormLabel">Date: </label>
-                        <Input  value={this.state.booking.date} 
-                                onChange={this.handleChange} 
-                                name="date"
-                                className="customer-field" />
-                        
-                        <label className="editFormLabel">Time: </label>
-                        <Input  value={this.state.booking.time} 
-                                onChange={this.handleChange}
-                                name="time"
-                                className="customer-field" />
-                        
-                         <label className="editFormLabel">Name: </label>
-                        <Input  value={this.state.booking.name} 
-                                onChange={this.handleChange}
-                                name="name"
-                                className="customer-field" />
-                        
-                        <label className="editFormLabel">E-mail: </label> 
-                        <Input  value={this.state.booking.email} 
-                                onChange={this.handleChange}
-                                name="email"
-                                className="customer-field" />
-                        
-                        <label className="editFormLabel">Phone: </label>
-                        <Input  value={this.state.booking.phone} 
-                                onChange={this.handleChange}
-                                name="phone"
-                                className="customer-field" />
-                        
-                        <label className="editFormLabel">Guests: </label>
-                        <Input  value={this.state.booking.amount_of_people} 
-                                onChange={this.handleChange}
-                                name="amount_of_people"
-                                className="customer-field"
-                                type="number"
-                                min="1" 
-                                max="6" />
-                        
-                        <Button value={this.state.booking.customer_id} 
-                                text="Save" 
-                                onClick={this.handleSave}
-                                className="button secondary" /> 
+                            <FormLabel className="editFormLabel" for="date" text="Date: " />
+                            <Input  value={this.state.booking.date} 
+                                    onChange={this.handleChange} 
+                                    name="date"
+                                    id="date"
+                                    className="customer-field" />
+                            
+                            <FormLabel className="editFormLabel" for="time" text="Time: " />
+                            <Input  value={this.state.booking.time} 
+                                    onChange={this.handleChange}
+                                    name="time"
+                                    id="time"
+                                    className="customer-field" />
+                            
+                            <FormLabel className="editFormLabel" for="name" text="Name: "/>
+                            <Input  value={this.state.booking.name} 
+                                    onChange={this.handleChange}
+                                    name="name"
+                                    id="name"
+                                    className="customer-field" />
+                            
+                            <FormLabel className="editFormLabel" for="email" text="E-mail: "/>
+                            <Input  value={this.state.booking.email} 
+                                    onChange={this.handleChange}
+                                    name="email"
+                                    id="email"
+                                    className="customer-field" />
+                            
+                            <FormLabel className="editFormLabel" for="phone" text="Phone: " />
+                            <Input  value={this.state.booking.phone} 
+                                    onChange={this.handleChange}
+                                    name="phone"
+                                    id="phone"
+                                    className="customer-field" />
+                            
+                            <FormLabel className="editFormLabel" for="guests" text="Guests: " />
+                            <Input  value={this.state.booking.amount_of_people} 
+                                    onChange={this.handleChange}
+                                    name="amount_of_people"
+                                    id="guests"
+                                    className="customer-field"
+                                    type="number"
+                                    min="1" 
+                                    max="6" />
+                            
+                            <Button value={this.state.booking.customer_id} 
+                                    text="Save" 
+                                    onClick={this.handleSave}
+                                    className="button secondary" /> 
                         </div>
                     </div>
                 </div>  
