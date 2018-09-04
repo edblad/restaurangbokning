@@ -3,7 +3,8 @@ import Form from './../form/form';
 import Input from './../input/input';
 import Button from './../button/button';
 import BookingContainer from './bookingContainer';
-import BookingLabel from './../label/bookingLabel';
+import BookingHeading from './../label/bookingHeading';
+import FormLabel from './../label/formLabel';
 import './bookingform.css';
 
 class Bookingform extends Component {
@@ -41,9 +42,6 @@ class Bookingform extends Component {
 
         if(this.state.booking.date){
             this.setState({
-                isFirstButtonHidden: true,
-                isSecondButtonHidden: true,
-                isCustomerFormHidden: true,
                 dateError: false
             });
     
@@ -199,11 +197,11 @@ class Bookingform extends Component {
             <BookingContainer>
                 <div className="inner-wrap">
                     <div style={bookingFormStyle}>
-                    <BookingLabel text="Reservation"/>
+                    <BookingHeading text="Reservation"/>
                         <div style={searchFormStyle}>
                             <Form className="secondary-background">
-                                <span className="dateLabel">Date</span>
-                                <Input  id="this.selectedDate"
+                                <FormLabel for="datePicker" className="dateLabel" text="Date" />
+                                <Input  id="datePicker"
                                         className="search-date"
                                         value={this.state.booking.date}
                                         type="date"
@@ -242,7 +240,6 @@ class Bookingform extends Component {
                                     onChange={this.handleChange} />
                             {this.state.emailError && <div className="errorMsg">*Please enter a valid email</div>}
 
-                            {/* <label htmlFor="phone">Phone</label> */}
                             <Input  id="phone"
                                     className="customer-field"
                                     placeholder="Phone"
@@ -251,7 +248,7 @@ class Bookingform extends Component {
                                     onChange={this.handleChange} />
                             {this.state.phoneError && <div className="errorMsg">*Please enter a valid phone number</div>}
 
-                            <label  htmlFor="numberOfGuests" className="guest-label">Number of guests</label>
+                            <FormLabel for="numberOfGuests" className="guest-label" text="Number of guests" />
 
                             <div className="custom-select">
                                 <select id="numberOfGuests"
@@ -265,32 +262,31 @@ class Bookingform extends Component {
                                     <option value="5">5</option>
                                     <option value="6">6</option>
                                 </select>
+                            </div>
+                            <br />
+                            <Input
+                                id="gdpr"
+                                className="customer-field"
+                                placeholder="gdpr"
+                                type="checkbox"
+                                value={this.state.gdprCheck}
+                                onChange={this.handleGDPR}
+                                name="gdpr" />
 
-                                <br /><br /><br />
-                                <Input
-                                  id="gdpr"
-                                  className="customer-field"
-                                  placeholder="gdpr"
-                                  type="checkbox"
-                                  value={this.state.gdprCheck}
-                                  onChange={this.handleGDPR}
-                                  name="gdpr" />
-
-                                <label  htmlFor="numberOfGuests">I consent to the processing of my personal data</label>
-                                {this.state.gdprError && <div className="errorMsg">*You need to accept before booking</div>}
+                            <FormLabel for="gdpr" text="I consent to the processing of my personal data" />
+                            {this.state.gdprError && <div className="errorMsg">*You need to accept before booking</div>}
 
 
                             <Button text="Book"
-                                    className="button secondary"
-                                    onClick={this.handleBooking} />
+                                className="button secondary"
+                                onClick={this.handleBooking} />
                             <Button text="Cancel"
-                                    className="button ghost" />
-                            </div>
+                                className="button ghost" />
                         </Form>
                     </div>
 
                     <div  style={feedbackStyle}>
-                        <BookingLabel text="See you soon!" />
+                        <BookingHeading text="See you soon!" />
                         <ul className="secondary-background">
                             <li>{this.state.booking.name}</li>
                             <li>{this.state.booking.phone}</li>
