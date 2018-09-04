@@ -8,26 +8,31 @@ import './bookingform.css';
 
 class Bookingform extends Component {
 
-    state = {
-        date: '',
-        time: '',
-        name: '',
-        phone: '',
-        email: '',
-        numberOfGuests: '1',
-        isFirstButtonHidden: true,
-        isSecondButtonHidden: true,
-        isCustomerFormHidden: true,
-        isFeedbackHidden: true,
-        isBookingHidden: false,
-        isSearchFormHidden: false,
-        gdprCheck: false,
-        nameError: false,
-        phoneError: false,
-        emailError: false,
-        gdprError: false
-    }
+    constructor(props) {
+        super(props);
 
+        this.state = {
+            date: '',
+            time: '',
+            name: '',
+            phone: '',
+            email: '',
+            numberOfGuests: '1',
+            isFirstButtonHidden: true,
+            isSecondButtonHidden: true,
+            isCustomerFormHidden: true,
+            isFeedbackHidden: true,
+            isBookingHidden: false,
+            isSearchFormHidden: false,
+            gdprCheck: false,
+            nameError: false,
+            phoneError: false,
+            emailError: false,
+            gdprError: false,
+        }
+        this.handleChange = this.handleChange.bind(this);
+    }
+  
     handleSearch = (event) => {
         event.preventDefault();
 
@@ -67,12 +72,6 @@ class Bookingform extends Component {
         });
     }
 
-    handleDate = (event) => {
-        this.setState({
-            date: event.target.value
-        })
-    }
-
     handleTimeSitting = (event) => {
         event.preventDefault();
         this.setState({
@@ -82,25 +81,9 @@ class Bookingform extends Component {
         })
     }
 
-    handleName = (event) => {
-        this.setState({ name: event.target.value, nameError: false });
-    }
-
-    handlePhone = (event) => {
-        this.setState({ phone: event.target.value, phoneError: false });
-    }
-
-    handleEmail = (event) => {
-        this.setState({ email: event.target.value, emailError: false });
-    }
-
-    handleGuests = (event) => {
-        this.setState({ numberOfGuests: event.target.value });
-    }
-
     handleBooking = (event) => {
         event.preventDefault();
-
+        
         let anyError = false;
 
         //Check if Name is filled in
@@ -130,7 +113,6 @@ class Bookingform extends Component {
         if(anyError === true){
           return;
         }
-
 
         const booking = this.state;
 
@@ -174,10 +156,19 @@ class Bookingform extends Component {
     }
 
     handleGDPR = (event) => {
-    this.setState({
-      gdprCheck: event.target.checked, gdprError: false
-    });
-  }
+        this.setState({
+            gdprCheck: event.target.checked, gdprError: false
+        });
+    }
+
+    handleChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value,
+            nameError: false,
+            emailError: false,
+            phoneError: false
+        })  
+    }
 
     render(){
 
@@ -195,12 +186,12 @@ class Bookingform extends Component {
                     <BookingLabel text="Reservation"/>
                         <div style={searchFormStyle}>
                             <Form className="secondary-background">
-                                <span>Date</span>
+                                <span className="dateLabel">Date</span>
                                 <Input  id="this.selectedDate"
                                         className="search-date"
                                         value={this.state.date}
                                         type="date"
-                                        onChange={this.handleDate}
+                                        onChange={this.handleChange}
                                         name="date" />
                                 <Button className="button primary" text="Search"
                                         onClick={this.handleSearch}/>
@@ -218,22 +209,20 @@ class Bookingform extends Component {
 
                         <Form className="customer-form"
                               style={customerFormStyle}>
-                            {/* <label htmlFor="name">Name</label> */}
                             <Input  id="name"
                                     className="customer-field"
                                     placeholder="Name"
                                     type="text"
                                     name="name"
-                                    onChange={this.handleName} />
+                                    onChange={this.handleChange} />
                             {this.state.nameError && <div className="errorMsg">*Please fill in your name</div>}
 
-                            {/* <label htmlFor="email">E-mail</label> */}
                             <Input  id="email"
                                     className="customer-field"
                                     placeholder="E-mail"
                                     type="email"
                                     name="email"
-                                    onChange={this.handleEmail} />
+                                    onChange={this.handleChange} />
                             {this.state.emailError && <div className="errorMsg">*Please enter a valid email</div>}
 
                             {/* <label htmlFor="phone">Phone</label> */}
@@ -242,7 +231,7 @@ class Bookingform extends Component {
                                     placeholder="Phone"
                                     type="text"
                                     name="phone"
-                                    onChange={this.handlePhone} />
+                                    onChange={this.handleChange} />
                             {this.state.phoneError && <div className="errorMsg">*Please enter a valid phone number</div>}
 
                             <label  htmlFor="numberOfGuests" className="guest-label">Number of guests</label>
@@ -250,7 +239,8 @@ class Bookingform extends Component {
                             <div className="custom-select">
                                 <select id="numberOfGuests"
                                         className="select-guests"
-                                        onChange={this.handleGuests}>
+                                        name="numberOfGuests"
+                                        onChange={this.handleChange}>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -281,7 +271,6 @@ class Bookingform extends Component {
                             </div>
                         </Form>
                     </div>
-
 
                     <div  style={feedbackStyle}>
                         <BookingLabel text="See you soon!" />

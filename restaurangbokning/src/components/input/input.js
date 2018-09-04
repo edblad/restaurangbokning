@@ -9,6 +9,7 @@ function Input(props){
                 value={ props.value } 
                 onChange={ props.onChange }
                 style={ props.style }
+                name={ props.name }
         />
     )
 }

@@ -25,9 +25,9 @@ $statement2->execute(array(
  //echo json_encode($booking);
 
  //Send booking confirmation email to customer upon completion of booking
- $headers = "From: bookingconfirmation@restaurant.com";
- mail($bookingData->email,"Booking Confirmation","<h1>Thank you for your booking $bookingData->name</h1><br> Your have booked a table for
- $bookingData->numberOfGuests, on the date of $bookingData->date, at $bookingData->time . We look forward to seeing you!" $headers);
+//  $headers = "From: bookingconfirmation@restaurant.com";
+//  mail($bookingData->email,"Booking Confirmation","<h1>Thank you for your booking $bookingData->name</h1><br> Your have booked a table for
+//  $bookingData->numberOfGuests, on the date of $bookingData->date, at $bookingData->time . We look forward to seeing you!" $headers);
 
 
 echo '';

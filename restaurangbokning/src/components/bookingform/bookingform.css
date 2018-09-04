@@ -20,8 +20,12 @@ select#numberOfGuests{
     /* font-family: 'Special Elite', cursive; */
     font-family: 'Fira Mono', monospace;
     text-align: center;
-    margin: 0 10%;
-    width: 80%;
+    margin: 0 auto;
+    width: 84%;
+}
+
+.dateLabel {
+    margin-right: 16px;
 }
 
 .feedback-wrap {

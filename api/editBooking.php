@@ -14,8 +14,8 @@ $bookingStatement = $pdo->prepare($editBooking);
 $bookingStatement->execute(array(
     ':date' => $bookingData->date,
     ':time' => $bookingData->time,
-    ':amount_of_people' => $bookingData->numberOfGuests,
-    ':customer_id' => $bookingData->customerId
+    ':amount_of_people' => $bookingData->amount_of_people,
+    ':customer_id' => $bookingData->customer_id
 ));
 
 
@@ -30,7 +30,7 @@ $customerStatement->execute(array(
     ':name' => $bookingData->name,
     ':phone' => $bookingData->phone,
     ':email' => $bookingData->email,
-    'customer_id' => $bookingData->customerId
+    'customer_id' => $bookingData->customer_id
 ));
 
 echo 'edited';
