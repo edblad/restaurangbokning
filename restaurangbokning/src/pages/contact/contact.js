@@ -9,9 +9,9 @@ const Contact = () => (
       <div className="contactBox">
         <h2>Opening hours</h2>
         <ul>
-          <li>Monday-Friday: 08.00-17.00</li>
-          <li>Saturday: 09.00-16.00</li>
-          <li>Sunday: 11.00-16.00</li>
+          <li>Monday-Friday: 18.00-24.00</li>
+          <li>Saturday: 17.00-01.00</li>
+          <li>Sunday: 17.00-23.00</li>
         </ul>
       </div>
       <div className="contactBox">
