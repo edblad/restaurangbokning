@@ -54,17 +54,18 @@ tr:hover {
 }
 
 .iconAdmin {
-    width: 40px;
+    width: 35px;
 }
 
-.iconAdmin:hover path{
-    fill:red;
-}
-
-.iconAdmin:nth-child(1) {
+.iconDelete {
+    background-image: url('../../images/iconDeleteDark.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 40px;
+    width:40px;
     margin-right: 10px;
 }
-
 .iconAdmin:nth-child(1):hover {
     fill: #FF0000;
 }
