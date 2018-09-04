@@ -4,6 +4,8 @@
 
 .hamburgerMenu {
     display: block;
+    position: absolute;
+    width: 100%;
 }
 
 
@@ -59,7 +61,7 @@
 #menuToggle input:checked ~ span {
     opacity: 1;
     transform: rotate(45deg) translate(-2px, -1px);
-    background: #000000;
+    background: white;
 }
 
 #menuToggle input:checked ~ span:nth-last-child(3) {
@@ -80,11 +82,11 @@
     padding: 50px;
     padding-top: 125px;
     opacity: 0.8;
-    background: white;
+    background: black;
     list-style-type: none;
     transform-origin: 0% 0%;
     transform: translate(-100%, 0);
-    color: black;
+    color: white;
     transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
 }
 
@@ -95,7 +97,7 @@
 }
 
 #menuHamburgerSlide a {
-    color: black;
+    color: white;
     text-decoration: none;
 }
 
