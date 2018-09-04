@@ -32,30 +32,29 @@ class Bookingform extends Component {
             phoneError: false,
             emailError: false,
             gdprError: false,
-            dateError: false
+            dateError: false,
+            isFullyBooked: '',
+            error: ''
         }
         this.handleChange = this.handleChange.bind(this);
     }
   
     handleSearch = (event) => {
         event.preventDefault();
-
-        if(this.state.booking.date){
-            this.setState({
-                dateError: false
-            });
-    
+        
+        // Only do this if there's a date chosen
+        if(this.state.booking.date){    
             const selectedDate = this.state.booking.date;
     
             fetch('http://localhost:8888/searchDate.php?date=' + selectedDate)
             .then(response => response.json())
-            .then((data) => {
-                const timeList = data.map((singleTime) => singleTime.time);
-    
+            .then((dateData) => {
+                const timeList = dateData.map((singleTime) => singleTime.time);
                 let firstSitting = 0;
                 let secondSitting = 0;
     
-                if(data.length < 30){
+                // Counts booked tables
+                if(dateData.length < 30){
                     for(let time of timeList) {
                         if (time === '18:00:00') {
                             firstSitting++;
@@ -64,16 +63,26 @@ class Bookingform extends Component {
                             secondSitting++;
                         }
                     }
-    
+
                     if(firstSitting < 15) {
                         this.setState({ isFirstButtonHidden: false })
                     }
                     if(secondSitting < 15) {
                         this.setState({ isSecondButtonHidden: false })
                     }
+                }else{
+                    this.setState({ 
+                        isFullyBooked: <p>Today we are fully booked. Please try another day!</p>
+                     });
                 }
             });
+
+            // Removes error if there was one
+            this.setState({
+                dateError: false
+            });
         }else{
+            // Error if date is not chosen
             this.setState({ dateError: true });
           }
     }
@@ -122,7 +131,9 @@ class Bookingform extends Component {
             },
             body: JSON.stringify(booking)
         })
-        .catch(() => {});
+        .catch((error) => {
+            this.setState({ error })
+        });
 
         this.setState({
             isFirstButtonHidden: false,
@@ -149,7 +160,7 @@ class Bookingform extends Component {
             isFeedbackHidden: true,
             isBookingHidden: false,
             isSearchFormHidden: false
-        })
+        });
     }
 
     handleGDPR = (event) => {
@@ -209,6 +220,7 @@ class Bookingform extends Component {
                                         onClick={this.handleSearch}/>
                                 {this.state.dateError && <div className="errorMsg">*Please choose a date</div>}
                             </Form>
+                            {this.state.isFullyBooked}
 
                             <Button className="button secondary"
                                     onClick={this.handleTimeSitting}
