@@ -3,6 +3,9 @@ import Button from '../button/button';
 import Input from '../input/input';
 import './adminlist.css';
 import BookingForm from './../../components/bookingform/bookingform';
+import iconEdit from '../../images/iconEditDark.svg';
+import iconDelete from '../../images/iconDeleteDark.svg';
+import iconSave from '../../images/iconSaveDark.svg';
 
 class AdminList extends Component {
     constructor(props) {
@@ -24,7 +27,6 @@ class AdminList extends Component {
             mode: 'view'
         }
         this.handleChange = this.handleChange.bind(this);
-        this.hello = this.hello.bind(this)
     }
 
     componentWillMount() {
@@ -148,12 +150,22 @@ class AdminList extends Component {
                                 <td>{booking.phone}</td>
                                 <td>{booking.amount_of_people}</td>
                                 <td>
-                                    <Button value={booking.customer_id} 
+                                    {/* <Button value={booking.customer_id} 
                                             text="X" 
-                                            onClick={this.handleDelete} />
-                                    <Button value={booking.customer_id} 
+                                            onClick={this.handleDelete} /> */}
+                                    {/* <Button value={booking.customer_id} 
                                             text="Edit" 
-                                            onClick={() => this.setState({booking, mode: 'edit'})} />
+                                            onClick={() => this.setState({booking, mode: 'edit'})} /> */}
+                                    <button><img    src={iconDelete} alt="Icon for delete" 
+                                            value={booking.customer_id} 
+                                            onClick={this.handleDelete}
+                                            className="iconAdmin"/>
+                                    </button>        
+                                    <button><img    src={iconEdit} alt="Icon for Edit" 
+                                            value={booking.customer_id} 
+                                            onClick={() => this.setState({booking, mode: 'edit'})}
+                                            className="iconAdmin"/>
+                                    </button>
                                 </td>
                             </tr>
                             )
@@ -190,46 +202,47 @@ class AdminList extends Component {
                             <td>
                                 <Input  value={this.state.booking.date} 
                                         onChange={this.handleChange} 
-                                        name='date' />
+                                        name="date" />
                             </td>
                             <td>
                                 <Input  value={this.state.booking.time} 
                                         onChange={this.handleChange}
-                                        name='time' />
+                                        name="time" />
                             </td>
                             <td>
                                 <Input  value={this.state.booking.name} 
                                         onChange={this.handleChange}
-                                        name='name' />
+                                        name="name" />
                             </td>
                             <td>
                                 <Input  value={this.state.booking.email} 
                                         onChange={this.handleChange}
-                                        name='email' />
+                                        name="email" />
                             </td>
                             <td>
                                 <Input  value={this.state.booking.phone} 
                                         onChange={this.handleChange}
-                                        name='phone' />
+                                        name="phone" />
                             </td>
                             <td>
                                 <Input  value={this.state.booking.amount_of_people} 
                                         onChange={this.handleChange}
-                                        name='amount_of_people'  />
+                                        name="amount_of_people" />
                             </td>
                             <td>
-                                <Button value={this.state.booking.customer_id} 
-                                        text="X" 
-                                        onClick={this.handleDelete} />
-                                {/* <Button value={this.state.booking.customer_id} 
-                                        text="Edit" 
-                                        onClick={() => this.setState({booking, mode: 'edit'})} /> */}
-                                {/* <Button value={booking.customer_id} 
-                                        text="Edit" 
-                                        onClick={(event) => {this.setState({booking}), this.hello(event) }} /> */}
-                                <Button value={this.state.booking.customer_id} 
+                            {/* <button>
+                                <img    src={iconDelete} alt="Icon for delete" 
+                                        value={this.state.booking.customer_id} 
+                                        onClick={this.handleDelete}
+                                        className="iconAdmin"/>
+                            </button>  */}
+                            <button>   
+                                <img    src={iconSave} alt="Icon for save"
+                                        value={this.state.booking.customer_id} 
                                         text="Save" 
-                                        onClick={this.handleSave} />
+                                        onClick={this.handleSave}
+                                        className="iconAdmin" />
+                            </button> 
                             </td>
                         </tr>
                         <tr>

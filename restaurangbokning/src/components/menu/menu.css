@@ -1,7 +1,24 @@
 .menu {
-  margin: 15px;
+  text-align: center;
+  background: #000;
+  padding: 15px;
 }
 
 .menu a {
+  color: #fff;
   margin: 0px 35px;
+  padding: 6px 16px 6px;
+  text-decoration: none;
+}
+
+.menu a:hover {
+  border-bottom: 3px solid #fff;
+  border-top: 3px solid #fff;
+}
+
+.iconHome {
+  height: 35px;
+  border: 1px solid #fff;
+  margin:0;
+  padding:0;
 }

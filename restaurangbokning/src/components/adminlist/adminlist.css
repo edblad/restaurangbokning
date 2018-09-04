@@ -2,7 +2,7 @@ table {
     background-color: #fff;
     text-align: left;
     width: 100%;
-    max-width: 900px;
+    max-width: 1200px;
     margin: 64px auto;
     padding: 32px;
     border-collapse: collapse;
@@ -28,7 +28,7 @@ td {
     color: #1a1a1a;
 }
 
-td Button {
+/* td Button {
     background-color: #4AD697;
     border-radius: 999px;
     color: #fff;
@@ -40,8 +40,32 @@ td Button {
 
 td Button:hover {
     background-color: rgb(50, 140, 99); 
+} */
+
+button {
+    background: transparent;
+    border:none;
+    -webkit-appearance: none;
+    cursor: pointer;
 }
 
 tr:hover {
     background-color: #EBFAF3;
 }
+
+.iconAdmin {
+    width: 40px;
+}
+
+.iconAdmin:hover path{
+    fill:red;
+}
+
+.iconAdmin:nth-child(1) {
+    margin-right: 10px;
+}
+
+.iconAdmin:nth-child(1):hover {
+    fill: #FF0000;
+}
+

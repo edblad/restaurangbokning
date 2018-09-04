@@ -186,7 +186,7 @@ class Bookingform extends Component {
                     <BookingLabel text="Reservation"/>
                         <div style={searchFormStyle}>
                             <Form className="secondary-background">
-                                <span>Date</span>
+                                <span className="dateLabel">Date</span>
                                 <Input  id="this.selectedDate"
                                         className="search-date"
                                         value={this.state.date}
