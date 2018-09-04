@@ -26,7 +26,8 @@ class AdminList extends Component {
             },
             isReservationHidden: true,
             isEditHidden: true,
-            mode: 'view'
+            mode: 'view',
+            error: ''
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -42,42 +43,33 @@ class AdminList extends Component {
                 this.setState({ 
                     bookings: data,
                 })
-                console.log("this.state.bookings: ", this.state.bookings);
-
-            },
-            (error) => {
+            })
+            .catch((error) => {
+                console.log(error)
                 this.setState({ error })
             });
     }
 
-    handleAddReservation = (event) => {
-            event.preventDefault();
-
+    handleAddReservation = () => {
         this.setState({
             isReservationHidden: false
         });
-        
-                }
+    }
 
     handleDelete = (event) => {
-        event.preventDefault();
         const selectedDelete = event.target.value;
-        console.log(selectedDelete)
 
         fetch('http://localhost:8888/deleteBooking.php?id=' + selectedDelete)
         .then(() => {
             this.fetchBookings();
         })
-        .catch((err) => {
-            console.log(err.message)
+        .catch((error) => {
+            this.setState({ error })
         });
     }
 
-    handleSave = (event) => {
-        event.preventDefault();
+    handleSave = () => {
         const selectedEdit = this.state.booking;
-        //console.log(selectedEdit)
-        //console.log(JSON.stringify(selectedEdit));
 
         fetch('http://localhost:8888/editBooking.php',
         {
@@ -92,6 +84,9 @@ class AdminList extends Component {
             this.setState({isEditHidden: true})
             this.fetchBookings();
         })
+        .catch((error) => {
+            this.setState({ error })
+        });
     }
    
     handleChange(event) {
@@ -104,18 +99,19 @@ class AdminList extends Component {
     }
 
     render(){
-        const bookings = this.state.bookings
+        const bookings = this.state.bookings;
         const addReservationStyle = this.state.isReservationHidden ? { display: 'none'} : {};
         const addEditStyle = this.state.isEditHidden ? { display: 'none'} : {};
-        
+        const errorMessage = this.state.error;
+
         
             return(
             <div className="tableWrap">
                 <div className="adminHeader">
                     <h1>Admin</h1>
+                    {errorMessage.length > 0 && <p>{this.state.error}</p>}
                     <Button text="Add Reservation" className="button primary right" onClick={this.handleAddReservation}/>
                 </div>
-                
                 <table>
                     <thead>
                         <tr>
@@ -215,70 +211,7 @@ class AdminList extends Component {
                     </div>
                 </div>  
             </div>
-            )
-        // } if(this.state.mode === 'edit') {
-        //     return(
-        //         <div className="editWrap">
-        //         <table>
-        //             <thead>
-        //                 <tr>
-        //                     <th>Date</th>
-        //                     <th>Time</th>
-        //                     <th>Name</th>
-        //                     <th>E-mail</th>
-        //                     <th>Phone</th>
-        //                     <th>Guests</th>
-        //                     <th>Action</th>
-        //                 </tr>
-        //             </thead>
-        //             <tbody>
-        //                 <tr>
-        //                     <td>
-        //                         <Input  value={this.state.booking.date} 
-        //                                 onChange={this.handleChange} 
-        //                                 name="date" />
-        //                     </td>
-        //                     <td>
-        //                         <Input  value={this.state.booking.time} 
-        //                                 onChange={this.handleChange}
-        //                                 name="time" />
-        //                     </td>
-        //                     <td>
-        //                         <Input  value={this.state.booking.name} 
-        //                                 onChange={this.handleChange}
-        //                                 name="name" />
-        //                     </td>
-        //                     <td>
-        //                         <Input  value={this.state.booking.email} 
-        //                                 onChange={this.handleChange}
-        //                                 name="email" />
-        //                     </td>
-        //                     <td>
-        //                         <Input  value={this.state.booking.phone} 
-        //                                 onChange={this.handleChange}
-        //                                 name="phone" />
-        //                     </td>
-        //                     <td>
-        //                         <Input  value={this.state.booking.amount_of_people} 
-        //                                 onChange={this.handleChange}
-        //                                 name="amount_of_people" />
-        //                     </td>
-        //                     <td>
-        //                     <button>   
-        //                         <img    src={iconSave} alt="Icon for save"
-        //                                 value={this.state.booking.customer_id} 
-        //                                 text="Save" 
-        //                                 onClick={this.handleSave}
-        //                                 className="iconAdmin" />
-        //                     </button> 
-        //                     </td>
-        //                 </tr>
-        //             </tbody>
-                
-        //         </table>           
-        //     </div> 
-        //     )
-                     
+         )
     }
 }
 
