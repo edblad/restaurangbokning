@@ -36,18 +36,22 @@ class Menu extends Component {
     <Link to="/admin">Admin</Link>
     </div>
     
-    <div className="hamburgerMenu" onClick={this.toogleHamburgerMenu}>
-    <nav class="menu-opener" >
-        <div class="menu-opener-inner"></div>
-    </nav>
-    <nav class="menuB" style={addHamburgerStyle}>
-    <ul class="menu-inner">
-    <Link to="/">Home</Link>
-    <Link to="/booking">Booking</Link>
-    <Link to="/contact">Contact</Link>
-    <Link to="/admin">Admin</Link>
+    <div className="hamburgerMenu">
+<nav role="navigation">
+  <div id="menuToggle">
+
+    <input type="checkbox" />
+    <span></span>
+    <span></span>
+    <span></span>
+    <ul id="menuHamburgerSlide">
+      <li><Link to="/">Home</Link></li>
+      <li><Link to="/booking">Booking</Link></li>
+      <li><Link to="/contact">Contact</Link></li>
+      <li><Link to="/admin">Admin</Link></li>
     </ul>
-  </nav>
+  </div>
+</nav>
     </div></div>
         
     );
