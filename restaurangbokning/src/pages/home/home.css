@@ -1,16 +1,22 @@
 .page-home {
-  background-image: url(../../images/homepage@1900px.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  height: calc(100vh - 48px);
-  overflow: hidden;
+    
+    display: flex;
+    flex-wrap: wrap;
+    background-image: url(../../images/homepage@1900px.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    height: calc(100vh - 48px);
 }
 
 .homeBox {
-  width: 500px;
-  height: 300px;
-  margin: auto;
-  margin-top:18%;
+
+    width: 500px;
+    height: 300px;
+    margin: auto;
+    margin-top: 18%;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 

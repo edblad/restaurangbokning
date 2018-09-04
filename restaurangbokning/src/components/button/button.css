@@ -38,9 +38,17 @@
 
 .homeButton {
     padding: 16px 38px;
-    width: calc(100% - 258px);
+    width: calc(100% - 0px);
 }
 
 .button.ghost.homeButton {
     margin-right: 16px;
+}
+
+@media screen and (min-width: 600px) {
+
+.homeButton {
+    width: calc(100% - 258px);
+}
+
 }
