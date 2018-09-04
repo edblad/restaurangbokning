@@ -1,22 +1,24 @@
+@import url('https://fonts.googleapis.com/css?family=Yeseva+One');
+
 .normalMenu {
     display: none;
 }
 
 .hamburgerMenu {
     display: block;
-    position: absolute;
-    width: 100%;
+    position: relative;
 }
 
 
 #menuToggle {
     display: block;
-    position: relative;
-    top: 50px;
-    left: 50px;
+    position: absolute;
+    top: 13px;
+    left: 24px;
     z-index: 1;
     -webkit-user-select: none;
     user-select: none;
+    width: 100%;
 }
 
 #menuToggle input {
@@ -41,7 +43,7 @@
     height: 4px;
     margin-bottom: 5px;
     position: relative;
-    background: #ffffff;
+    background: #fff;
     border-radius: 25px;
     z-index: 1;
     transform-origin: 4px 0px;
@@ -111,6 +113,20 @@
     transform: none;
 }
 
+.menu{
+  background: #000;
+  height: 50px;
+}
+
+.mobileLogo {
+  color: #fff;
+  font-size: 1.7em;
+  text-decoration: none;
+  font-family: 'Yeseva One', cursive;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
 /* 780px */
 
 @media screen and (min-width: 780px) {
@@ -126,7 +142,6 @@
     .menu {
         text-align: center;
         background: #000;
-        padding-bottom: 13px;
     }
 
     .menu a {
@@ -139,6 +154,10 @@
     .menu a:hover {
         border-bottom: 3px solid #fff;
         border-top: 3px solid #fff;
+    }
+
+    a.noDecor:hover{
+      border: none;
     }
 
     .iconHome {
@@ -158,7 +177,7 @@
         margin-bottom: -70px;
         position: relative;
     }
-    @import url('https://fonts.googleapis.com/css?family=Yeseva+One');
+    
     .circle span {
         font-family: 'Yeseva One', cursive;
         color: #fff;

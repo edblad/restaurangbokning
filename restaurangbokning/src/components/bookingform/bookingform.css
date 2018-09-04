@@ -32,6 +32,15 @@ select#numberOfGuests{
     background-color: #f3f3f3;
 }
 
+.booking-container{
+    margin: auto;
+    margin-top: 8%;
+    background: rgba(255,255,255,0.90);
+    max-width: 480px;
+    height: 560px;
+    border-radius: 2px;
+}
+
 /*-----------------------------
            FORMS
 -------------------------------*/

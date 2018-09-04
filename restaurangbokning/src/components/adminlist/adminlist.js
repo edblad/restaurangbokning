@@ -26,7 +26,7 @@ class AdminList extends Component {
             isReservationHidden: true,
             isEditHidden: true,
             mode: 'view',
-            error: ''
+            error: false
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -44,15 +44,8 @@ class AdminList extends Component {
                 })
             })
             .catch((error) => {
-                console.log(error)
-                this.setState({ error })
+                this.setState({ error: true })
             });
-    }
-
-    handleAddReservation = () => {
-        this.setState({
-            isReservationHidden: false
-        });
     }
 
     handleDelete = (event) => {
@@ -63,7 +56,7 @@ class AdminList extends Component {
             this.fetchBookings();
         })
         .catch((error) => {
-            this.setState({ error })
+            this.setState({ error: true })
         });
     }
 
@@ -84,7 +77,7 @@ class AdminList extends Component {
             this.fetchBookings();
         })
         .catch((error) => {
-            this.setState({ error })
+            this.setState({ error: true })
         });
     }
    
@@ -101,15 +94,13 @@ class AdminList extends Component {
         const bookings = this.state.bookings;
         const addReservationStyle = this.state.isReservationHidden ? { display: 'none'} : {};
         const addEditStyle = this.state.isEditHidden ? { display: 'none'} : {};
-        const errorMessage = this.state.error;
-
         
             return(
             <div className="tableWrap">
                 <div className="adminHeader">
                     <h1>Admin</h1>
-                    {errorMessage.length > 0 && <p>{this.state.error}</p>}
-                    <Button text="Add Reservation" className="button primary right" onClick={this.handleAddReservation}/>
+                    {this.state.error && <p>Something went wrong. Try again later.</p>}
+                    <Button text="Add Reservation" className="button primary right" onClick={() => {this.setState({ isReservationHidden: false })}} />
                 </div>
                 <table>
                     <thead>
@@ -148,14 +139,17 @@ class AdminList extends Component {
                         }
                     </tbody>
                 </table>
-                <div id="myModal" className="modal" style={addReservationStyle}>
+
+                {/* Only visible after clicking Add reservation */}
+                <div className="modal" style={addReservationStyle}>
                         <div className="modal-content">
                             <span className="close" onClick={() => this.setState({isReservationHidden: true})}>&times;</span>
                         <BookingForm />
                     </div>
                 </div>
 
-                <div id="modal-02" className="modal" style={addEditStyle}>
+                {/* Only visible after clicking edit icon */}
+                <div className="modal" style={addEditStyle}>
                     <div className="modal-content-edit">
                         <span className="close" onClick={() => this.setState({isEditHidden: true})}>&times;</span>
                         <div className="inner-modal">

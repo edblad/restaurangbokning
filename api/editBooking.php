@@ -18,7 +18,6 @@ $bookingStatement->execute(array(
     ':customer_id' => $bookingData->customer_id
 ));
 
-
 $editCustomer = 'UPDATE customer 
                  SET name = :name, 
                      phone = :phone, 

@@ -1,7 +1,10 @@
 <?php
 require 'database.php';
 
-$fetchAllBookings = 'SELECT * FROM bookings INNER JOIN customer ON bookings.customer_id = customer.customer_id';
+$fetchAllBookings = 'SELECT * FROM bookings 
+                     INNER JOIN customer 
+                     ON bookings.customer_id = customer.customer_id
+                     ORDER BY date ASC';
 
 $statement = $pdo->prepare($fetchAllBookings);  
 $statement->execute();

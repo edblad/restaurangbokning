@@ -12,3 +12,9 @@ body {
 li {
   list-style-type: none;
 }
+
+h2 {
+  font-family: sans-serif; 
+  margin-top: 0;
+  padding-top: 30px;
+}
