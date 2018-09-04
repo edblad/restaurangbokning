@@ -3,7 +3,7 @@ table {
     text-align: left;
     width: 100%;
     max-width: 1200px;
-    margin: 64px auto;
+    margin: auto;
     padding: 32px;
     border-collapse: collapse;
     border-radius: 6px;
@@ -20,27 +20,18 @@ th {
     font-size: 0.95em;
     padding-bottom: 16px;
     font-weight:600;
-    /* text-transform: uppercase; */
-    /* border-bottom: 1px solid #000; */
 }
 
 td {
     color: #1a1a1a;
 }
 
-/* td Button {
-    background-color: #4AD697;
-    border-radius: 999px;
-    color: #fff;
-    padding:16px 40px;
-    border:none;
-    -webkit-appearance: none;
-    cursor: pointer;
+table input {
+    padding: 12px 4px;
+    border: 1px solid black;
+    outline: none;
+    background: transparent;
 }
-
-td Button:hover {
-    background-color: rgb(50, 140, 99); 
-} */
 
 button {
     background: transparent;
@@ -53,8 +44,8 @@ tr:hover {
     background-color: #EBFAF3;
 }
 
-.iconAdmin {
-    width: 35px;
+.iconEdit {
+    width: 25px;
 }
 
 .iconDelete {
@@ -62,38 +53,46 @@ tr:hover {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    height: 40px;
-    width:40px;
+    height: 30px;
+    width:30px;
     margin-right: 10px;
 }
-.iconAdmin:nth-child(1):hover {
-    fill: #FF0000;
-}
 
-/* The Modal (background) */
 .modal {
-/*    display: none;  */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    position: fixed;
+    z-index: 1;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
 }
 
-/* Modal Content/Box */
-.modal-content {
+.modal-content, .modal-content-edit {
     background-color: #fefefe;
-    margin: 15% auto; 
-    padding: 20px;
+    margin: 5% auto; 
+    padding: 20px 40px;
+    width: 40%;
     border: 1px solid #888;
-    width: 80%;
+    border-radius: 4px;
 }
 
-/* The Close Button */
+.inner-modal {
+    margin: 0 auto;
+    max-width: 490px;
+    width: 100%;
+}
+
+.inner-modal h2 {
+    text-align: center;
+}
+
+.modal-content-edit button {
+    margin: 30px 0;
+}
+
 .close {
     color: #aaa;
     float: right;
@@ -106,4 +105,57 @@ tr:hover {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+.adminHeader {
+    width: 100%;
+    max-width: 1200px;
+    height: 55px;
+    margin: 0 auto;
+    padding: 64px 0 16px;
+    display: flex;
+}
+
+.adminHeader > button {
+    border-radius: 6px;
+    margin-left: auto;
+    margin-right: 24px;
+}
+
+.adminHeader > button:hover {
+    background-color: #307b85;
+}
+
+.adminHeader h1 {
+    margin-left: 24px;
+}
+
+.customer-field {
+    font-size: 0.8em;
+    background: transparent;
+    width: 100%;
+    max-width: 410px;
+    margin: 16px 0;
+    padding-bottom: 8px;
+    border: 0;
+    outline: 0;
+    border-bottom: 1px solid #B7B7B7;
+}
+
+.editFormLabel {
+    font-weight: 600;
+    margin-right: 16px;
+    display: inline-block;
+}
+
+@media screen and (max-width: 1240px) {
+   .customer-field {
+       max-width: 500px;
+   }
+   .modal-content, .modal-content-edit {
+        margin: 2% auto; 
+    }
+   .modal-content-edit {
+       width: 500px;
+   }
 }
