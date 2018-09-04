@@ -8,6 +8,7 @@ const Menu = () => (
     <Link to="/">Home</Link>
     <Link to="/booking">Booking</Link>
     {/* <img src={iconHome} alt="Icon for home" className="iconHome"/> */}
+    <div className="circle"><span>SIX</span></div>
     <Link to="/contact">Contact</Link>
     <Link to="/admin">Admin</Link>
   </div>
