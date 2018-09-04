@@ -59,9 +59,12 @@ class AdminList extends Component {
     handleDelete = (event) => {
         event.preventDefault();
         const selectedDelete = event.target.value;
+        console.log(selectedDelete)
 
         fetch('http://localhost:8888/deleteBooking.php?id=' + selectedDelete)
-        .then(response => response.json())
+        .then(() => {
+            this.fetchBookings();
+        })
         .catch((err) => {
             console.log(err.message)
         });
@@ -82,9 +85,7 @@ class AdminList extends Component {
             },
             body: JSON.stringify(selectedEdit)
         })
-        .then((editedBooking) => {
-            console.log('Edit success: ', editedBooking);
-            //window.location.reload();             //KAN VI LÖSA DETTA PÅ ANNAT SÄTT?
+        .then(() => {
             this.setState({mode: 'view'})
             this.fetchBookings();
         })
@@ -99,30 +100,11 @@ class AdminList extends Component {
         })  
     }
 
-    hello = (event) => {
-        //console.log("does it work?")
-        //console.log("event: ", event.target.value)
-        //let id = event.target.id
-        //console.log("id: ", event.target.id)
-        // if(this.state.booking.customer_id == event.target.value) {
-        //     console.log("event: ", event.target.value)
-        // }
-        // if (this.state.booking.customer_id == event.target.value){
-            
-            
-        //     this.setState({
-        //         booking: {
-        //             ...this.state.booking,
-        //         isHidden: false
-        //         }
-        //     })
-        // }
-        console.log(event.target.value)
-    }
-
     render(){
         const bookings = this.state.bookings
         const addReservationStyle = this.state.isReservationHidden ? { display: 'none'} : {};
+        const icon = <img src={iconDelete} alt="Icon for delete" 
+        className="iconAdmin"></img>
         
         if(this.state.mode === 'view') {
             return(
@@ -150,17 +132,15 @@ class AdminList extends Component {
                                 <td>{booking.phone}</td>
                                 <td>{booking.amount_of_people}</td>
                                 <td>
-                                    {/* <Button value={booking.customer_id} 
+                                    <Button value={booking.customer_id} 
                                             text="X" 
-                                            onClick={this.handleDelete} /> */}
+                                            onClick={this.handleDelete} />
                                     {/* <Button value={booking.customer_id} 
                                             text="Edit" 
                                             onClick={() => this.setState({booking, mode: 'edit'})} /> */}
-                                    <button><img    src={iconDelete} alt="Icon for delete" 
-                                            value={booking.customer_id} 
+                                    <button value={booking.customer_id} 
                                             onClick={this.handleDelete}
-                                            className="iconAdmin"/>
-                                    </button>        
+                                            className="iconDelete" />   
                                     <button><img    src={iconEdit} alt="Icon for Edit" 
                                             value={booking.customer_id} 
                                             onClick={() => this.setState({booking, mode: 'edit'})}
