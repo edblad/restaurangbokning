@@ -15,7 +15,7 @@ const Home = () => (
       <Link to="/Booking">
         <Button className="button secondary homeButton" text="Make a reservation"/>
       </Link>
-            </div>
+    </div>
 </div>
 );
 

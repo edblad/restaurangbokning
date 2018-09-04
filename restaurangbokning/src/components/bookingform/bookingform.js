@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Form from './../form/form';
 import Input from './../input/input';
 import Button from './../button/button';
-import BookingContainer from './bookingContainer';
 import BookingHeading from './../label/bookingHeading';
 import FormLabel from './../label/formLabel';
 import './bookingform.css';
@@ -34,7 +33,7 @@ class Bookingform extends Component {
             gdprError: false,
             dateError: false,
             isFullyBooked: '',
-            error: ''
+            error: false
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -49,32 +48,10 @@ class Bookingform extends Component {
             fetch('http://localhost:8888/searchDate.php?date=' + selectedDate)
             .then(response => response.json())
             .then((dateData) => {
-                const timeList = dateData.map((singleTime) => singleTime.time);
-                let firstSitting = 0;
-                let secondSitting = 0;
-    
-                // Counts booked tables
-                if(dateData.length < 30){
-                    for(let time of timeList) {
-                        if (time === '18:00:00') {
-                            firstSitting++;
-                        }
-                        else {
-                            secondSitting++;
-                        }
-                    }
-
-                    if(firstSitting < 15) {
-                        this.setState({ isFirstButtonHidden: false })
-                    }
-                    if(secondSitting < 15) {
-                        this.setState({ isSecondButtonHidden: false })
-                    }
-                }else{
-                    this.setState({ 
-                        isFullyBooked: <p>Today we are fully booked. Please try another day!</p>
-                     });
-                }
+                this.checkAvailableTables(dateData);
+            })
+            .catch((error) => {
+                this.setState({ error: true })
             });
 
             // Removes error if there was one
@@ -85,6 +62,35 @@ class Bookingform extends Component {
             // Error if date is not chosen
             this.setState({ dateError: true });
           }
+    }
+
+    checkAvailableTables = (dateData) => {
+        const timeList = dateData.map((singleTime) => singleTime.time);
+        let firstSitting = 0;
+        let secondSitting = 0;
+
+        // Counts booked tables
+        if(dateData.length < 30){
+            for(let time of timeList) {
+                if (time === '18:00:00') {
+                    firstSitting++;
+                }
+                else {
+                    secondSitting++;
+                }
+            }
+
+            if(firstSitting < 15) {
+                this.setState({ isFirstButtonHidden: false })
+            }
+            if(secondSitting < 15) {
+                this.setState({ isSecondButtonHidden: false })
+            }
+        }else{
+            this.setState({ 
+                isFullyBooked: <p>Today we are fully booked. Please try another day!</p>
+                });
+        }
     }
 
     handleBooking = (event) => {
@@ -132,7 +138,7 @@ class Bookingform extends Component {
             body: JSON.stringify(booking)
         })
         .catch((error) => {
-            this.setState({ error })
+            this.setState({ error: true })
         });
 
         this.setState({
@@ -165,7 +171,8 @@ class Bookingform extends Component {
 
     handleGDPR = (event) => {
         this.setState({
-            gdprCheck: event.target.checked, gdprError: false
+            gdprCheck: event.target.checked, 
+            gdprError: false
         });
     }
 
@@ -203,10 +210,11 @@ class Bookingform extends Component {
         const searchFormStyle = this.state.isSearchFormHidden ? { display: 'none'} : {};
 
         return (
-            <BookingContainer>
+            <div className="booking-container">
                 <div className="inner-wrap">
                     <div style={bookingFormStyle}>
                     <BookingHeading text="Book a table"/>
+                        {this.state.error && <p>Something went wrong. Try again later.</p>}
                         <div style={searchFormStyle}>
                             <Form className="secondary-background">
                                 <FormLabel for="datePicker" className="dateLabel" text="Date" />
@@ -310,7 +318,7 @@ class Bookingform extends Component {
                                 onClick={this.handleBack} />
                     </div>
                 </div>
-            </BookingContainer>
+            </div>
 
         )
     }

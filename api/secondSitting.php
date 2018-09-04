@@ -7,8 +7,6 @@ $statement = $pdo->prepare($fetchSecondSitting);
 $statement->execute();
 $secondSittingBookings = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-//var_dump ($bookings);
-
 echo json_encode($secondSittingBookings);
 
 ?>

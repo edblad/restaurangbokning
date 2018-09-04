@@ -1,0 +1,8 @@
+.booking-content {
+    background-image: url('../.././images/bookingpage@1900px.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    overflow: hidden;
+}
