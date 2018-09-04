@@ -25,7 +25,8 @@ class AdminList extends Component {
             },
             isReservationHidden: true,
             isEditHidden: true,
-            mode: 'view'
+            mode: 'view',
+            error: ''
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -41,42 +42,33 @@ class AdminList extends Component {
                 this.setState({ 
                     bookings: data,
                 })
-                console.log("this.state.bookings: ", this.state.bookings);
-
-            },
-            (error) => {
+            })
+            .catch((error) => {
+                console.log(error)
                 this.setState({ error })
             });
     }
 
-    handleAddReservation = (event) => {
-            event.preventDefault();
-
+    handleAddReservation = () => {
         this.setState({
             isReservationHidden: false
         });
-        
-                }
+    }
 
     handleDelete = (event) => {
-        event.preventDefault();
         const selectedDelete = event.target.value;
-        console.log(selectedDelete)
 
         fetch('http://localhost:8888/deleteBooking.php?id=' + selectedDelete)
         .then(() => {
             this.fetchBookings();
         })
-        .catch((err) => {
-            console.log(err.message)
+        .catch((error) => {
+            this.setState({ error })
         });
     }
 
-    handleSave = (event) => {
-        event.preventDefault();
+    handleSave = () => {
         const selectedEdit = this.state.booking;
-        //console.log(selectedEdit)
-        //console.log(JSON.stringify(selectedEdit));
 
         fetch('http://localhost:8888/editBooking.php',
         {
@@ -91,6 +83,9 @@ class AdminList extends Component {
             this.setState({mode: 'view'})
             this.fetchBookings();
         })
+        .catch((error) => {
+            this.setState({ error })
+        });
     }
    
     handleChange(event) {
@@ -103,14 +98,16 @@ class AdminList extends Component {
     }
 
     render(){
-        const bookings = this.state.bookings
+        const bookings = this.state.bookings;
         const addReservationStyle = this.state.isReservationHidden ? { display: 'none'} : {};
         const icon = <img src={iconDelete} alt="Icon for delete" 
         className="iconAdmin"></img>
+        const errorMessage = this.state.error;
         
         if(this.state.mode === 'view') {
             return(
             <div className="table-wrap">
+            {errorMessage.length > 0 && <p>{this.state.error}</p>}
                 <Button text="Add Reservation" onClick={this.handleAddReservation}/>
                 <table>
                     <thead>
