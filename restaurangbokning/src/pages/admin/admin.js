@@ -4,8 +4,7 @@ import './admin.css';
 
 
 const Admin = () => (
-    <div className="admin-wrap">
-        <h2>Admin</h2>
+    <div className="adminWrap">
         <AdminList />
     </div>
 );

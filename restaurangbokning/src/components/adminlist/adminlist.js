@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Button from '../button/button';
 import Input from '../input/input';
+import BookingHeading from '../label/bookingHeading';
 import './adminlist.css';
 import BookingForm from './../../components/bookingform/bookingform';
+import FormLabel from '../label/formLabel';
 import iconEdit from '../../images/iconEditDark.svg';
-import iconDelete from '../../images/iconDeleteDark.svg';
-import iconSave from '../../images/iconSaveDark.svg';
 
 
 class AdminList extends Component {
@@ -25,7 +25,8 @@ class AdminList extends Component {
             },
             isReservationHidden: true,
             isEditHidden: true,
-            mode: 'view'
+            mode: 'view',
+            error: ''
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -41,42 +42,33 @@ class AdminList extends Component {
                 this.setState({ 
                     bookings: data,
                 })
-                console.log("this.state.bookings: ", this.state.bookings);
-
-            },
-            (error) => {
+            })
+            .catch((error) => {
+                console.log(error)
                 this.setState({ error })
             });
     }
 
-    handleAddReservation = (event) => {
-            event.preventDefault();
-
+    handleAddReservation = () => {
         this.setState({
             isReservationHidden: false
         });
-        
-                }
+    }
 
     handleDelete = (event) => {
-        event.preventDefault();
         const selectedDelete = event.target.value;
-        console.log(selectedDelete)
 
         fetch('http://localhost:8888/deleteBooking.php?id=' + selectedDelete)
         .then(() => {
             this.fetchBookings();
         })
-        .catch((err) => {
-            console.log(err.message)
+        .catch((error) => {
+            this.setState({ error })
         });
     }
 
-    handleSave = (event) => {
-        event.preventDefault();
+    handleSave = () => {
         const selectedEdit = this.state.booking;
-        //console.log(selectedEdit)
-        //console.log(JSON.stringify(selectedEdit));
 
         fetch('http://localhost:8888/editBooking.php',
         {
@@ -88,9 +80,12 @@ class AdminList extends Component {
             body: JSON.stringify(selectedEdit)
         })
         .then(() => {
-            this.setState({mode: 'view'})
+            this.setState({isEditHidden: true})
             this.fetchBookings();
         })
+        .catch((error) => {
+            this.setState({ error })
+        });
     }
    
     handleChange(event) {
@@ -103,15 +98,19 @@ class AdminList extends Component {
     }
 
     render(){
-        const bookings = this.state.bookings
+        const bookings = this.state.bookings;
         const addReservationStyle = this.state.isReservationHidden ? { display: 'none'} : {};
-        const icon = <img src={iconDelete} alt="Icon for delete" 
-        className="iconAdmin"></img>
+        const addEditStyle = this.state.isEditHidden ? { display: 'none'} : {};
+        const errorMessage = this.state.error;
+
         
-        if(this.state.mode === 'view') {
             return(
-            <div className="table-wrap">
-                <Button text="Add Reservation" onClick={this.handleAddReservation}/>
+            <div className="tableWrap">
+                <div className="adminHeader">
+                    <h1>Admin</h1>
+                    {errorMessage.length > 0 && <p>{this.state.error}</p>}
+                    <Button text="Add Reservation" className="button primary right" onClick={this.handleAddReservation}/>
+                </div>
                 <table>
                     <thead>
                         <tr>
@@ -135,19 +134,13 @@ class AdminList extends Component {
                                 <td>{booking.phone}</td>
                                 <td>{booking.amount_of_people}</td>
                                 <td>
-                                    <Button value={booking.customer_id} 
-                                            text="X" 
-                                            onClick={this.handleDelete} />
-                                    {/* <Button value={booking.customer_id} 
-                                            text="Edit" 
-                                            onClick={() => this.setState({booking, mode: 'edit'})} /> */}
                                     <button value={booking.customer_id} 
                                             onClick={this.handleDelete}
                                             className="iconDelete" />   
-                                    <button><img    src={iconEdit} alt="Icon for Edit" 
+                                    <button><img src={iconEdit} alt="Icon for Edit" 
                                             value={booking.customer_id} 
-                                            onClick={() => this.setState({booking, mode: 'edit'})}
-                                            className="iconAdmin"/>
+                                            onClick={() => this.setState({booking, isEditHidden: false})}
+                                            className="iconEdit"/>
                                     </button>
                                 </td>
                             </tr>
@@ -155,89 +148,73 @@ class AdminList extends Component {
                         }
                     </tbody>
                 </table>
+                <div id="myModal" className="modal" style={addReservationStyle}>
+                        <div className="modal-content">
+                            <span className="close" onClick={() => this.setState({isReservationHidden: true})}>&times;</span>
+                        <BookingForm />
+                    </div>
+                </div>
 
-                        <div id="myModal" className="modal" style={addReservationStyle}>
-                                <div className="modal-content">
-                                    <span className="close" onClick={() => this.setState({isReservationHidden: true})}>&times;</span>
-                                <BookingForm />
-                            </div>
-                        </div>  
+                <div id="modal-02" className="modal" style={addEditStyle}>
+                    <div className="modal-content-edit">
+                        <span className="close" onClick={() => this.setState({isEditHidden: true})}>&times;</span>
+                        <div className="inner-modal">
+                            <BookingHeading text="Edit booking" />
+
+                            <FormLabel className="editFormLabel" for="date" text="Date: " />
+                            <Input  value={this.state.booking.date} 
+                                    onChange={this.handleChange} 
+                                    name="date"
+                                    id="date"
+                                    className="customer-field" />
+                            
+                            <FormLabel className="editFormLabel" for="time" text="Time: " />
+                            <Input  value={this.state.booking.time} 
+                                    onChange={this.handleChange}
+                                    name="time"
+                                    id="time"
+                                    className="customer-field" />
+                            
+                            <FormLabel className="editFormLabel" for="name" text="Name: "/>
+                            <Input  value={this.state.booking.name} 
+                                    onChange={this.handleChange}
+                                    name="name"
+                                    id="name"
+                                    className="customer-field" />
+                            
+                            <FormLabel className="editFormLabel" for="email" text="E-mail: "/>
+                            <Input  value={this.state.booking.email} 
+                                    onChange={this.handleChange}
+                                    name="email"
+                                    id="email"
+                                    className="customer-field" />
+                            
+                            <FormLabel className="editFormLabel" for="phone" text="Phone: " />
+                            <Input  value={this.state.booking.phone} 
+                                    onChange={this.handleChange}
+                                    name="phone"
+                                    id="phone"
+                                    className="customer-field" />
+                            
+                            <FormLabel className="editFormLabel" for="guests" text="Guests: " />
+                            <Input  value={this.state.booking.amount_of_people} 
+                                    onChange={this.handleChange}
+                                    name="amount_of_people"
+                                    id="guests"
+                                    className="customer-field"
+                                    type="number"
+                                    min="1" 
+                                    max="6" />
+                            
+                            <Button value={this.state.booking.customer_id} 
+                                    text="Save" 
+                                    onClick={this.handleSave}
+                                    className="button secondary" /> 
+                        </div>
+                    </div>
+                </div>  
             </div>
-            )
-        } if(this.state.mode === 'edit') {
-            return(
-                <div className="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Name</th>
-                            <th>E-mail</th>
-                            <th>Phone</th>
-                            <th>Guests</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <Input  value={this.state.booking.date} 
-                                        onChange={this.handleChange} 
-                                        name="date" />
-                            </td>
-                            <td>
-                                <Input  value={this.state.booking.time} 
-                                        onChange={this.handleChange}
-                                        name="time" />
-                            </td>
-                            <td>
-                                <Input  value={this.state.booking.name} 
-                                        onChange={this.handleChange}
-                                        name="name" />
-                            </td>
-                            <td>
-                                <Input  value={this.state.booking.email} 
-                                        onChange={this.handleChange}
-                                        name="email" />
-                            </td>
-                            <td>
-                                <Input  value={this.state.booking.phone} 
-                                        onChange={this.handleChange}
-                                        name="phone" />
-                            </td>
-                            <td>
-                                <Input  value={this.state.booking.amount_of_people} 
-                                        onChange={this.handleChange}
-                                        name="amount_of_people" />
-                            </td>
-                            <td>
-                            {/* <button>
-                                <img    src={iconDelete} alt="Icon for delete" 
-                                        value={this.state.booking.customer_id} 
-                                        onClick={this.handleDelete}
-                                        className="iconAdmin"/>
-                            </button>  */}
-                            <button>   
-                                <img    src={iconSave} alt="Icon for save"
-                                        value={this.state.booking.customer_id} 
-                                        text="Save" 
-                                        onClick={this.handleSave}
-                                        className="iconAdmin" />
-                            </button> 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><Button text="Add Reservation" onClick={this.handleAddReservation}/></td>
-                        </tr>
-                
-
-                    </tbody>
-                
-                </table>           
-            </div> 
-            )
-        }              
+         )
     }
 }
 

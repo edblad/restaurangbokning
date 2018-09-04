@@ -3,7 +3,8 @@ import Form from './../form/form';
 import Input from './../input/input';
 import Button from './../button/button';
 import BookingContainer from './bookingContainer';
-import BookingLabel from './../label/bookingLabel';
+import BookingHeading from './../label/bookingHeading';
+import FormLabel from './../label/formLabel';
 import './bookingform.css';
 
 class Bookingform extends Component {
@@ -12,12 +13,14 @@ class Bookingform extends Component {
         super(props);
 
         this.state = {
-            date: '',
-            time: '',
-            name: '',
-            phone: '',
-            email: '',
-            numberOfGuests: '1',
+            booking: {
+                date: '',
+                time: '',
+                name: '',
+                phone: '',
+                email: '',
+                numberOfGuests: '1',
+            },
             isFirstButtonHidden: true,
             isSecondButtonHidden: true,
             isCustomerFormHidden: true,
@@ -29,56 +32,59 @@ class Bookingform extends Component {
             phoneError: false,
             emailError: false,
             gdprError: false,
+            dateError: false,
+            isFullyBooked: '',
+            error: ''
         }
         this.handleChange = this.handleChange.bind(this);
     }
   
     handleSearch = (event) => {
         event.preventDefault();
-
-        this.setState({
-            isFirstButtonHidden: true,
-            isSecondButtonHidden: true,
-            isCustomerFormHidden: true
-        });
-
-        const selectedDate = this.state.date;
-
-        fetch('http://localhost:8888/searchDate.php?date=' + selectedDate)
-        .then(response => response.json())
-        .then((data) => {
-            const timeList = data.map((singleTime) => singleTime.time);
-
-            let firstSitting = 0;
-            let secondSitting = 0;
-
-            if(data.length < 30){
-                for(let time of timeList) {
-                    if (time === '18:00:00') {
-                        firstSitting++;
+        
+        // Only do this if there's a date chosen
+        if(this.state.booking.date){    
+            const selectedDate = this.state.booking.date;
+    
+            fetch('http://localhost:8888/searchDate.php?date=' + selectedDate)
+            .then(response => response.json())
+            .then((dateData) => {
+                const timeList = dateData.map((singleTime) => singleTime.time);
+                let firstSitting = 0;
+                let secondSitting = 0;
+    
+                // Counts booked tables
+                if(dateData.length < 30){
+                    for(let time of timeList) {
+                        if (time === '18:00:00') {
+                            firstSitting++;
+                        }
+                        else {
+                            secondSitting++;
+                        }
                     }
-                    else {
-                        secondSitting++;
+
+                    if(firstSitting < 15) {
+                        this.setState({ isFirstButtonHidden: false })
                     }
+                    if(secondSitting < 15) {
+                        this.setState({ isSecondButtonHidden: false })
+                    }
+                }else{
+                    this.setState({ 
+                        isFullyBooked: <p>Today we are fully booked. Please try another day!</p>
+                     });
                 }
+            });
 
-                if(firstSitting < 15) {
-                    this.setState({ isFirstButtonHidden: false })
-                }
-                if(secondSitting < 15) {
-                    this.setState({ isSecondButtonHidden: false })
-                }
-            }
-        });
-    }
-
-    handleTimeSitting = (event) => {
-        event.preventDefault();
-        this.setState({
-            time: event.target.value,
-            isCustomerFormHidden: false,
-            isSearchFormHidden: true
-        })
+            // Removes error if there was one
+            this.setState({
+                dateError: false
+            });
+        }else{
+            // Error if date is not chosen
+            this.setState({ dateError: true });
+          }
     }
 
     handleBooking = (event) => {
@@ -87,19 +93,19 @@ class Bookingform extends Component {
         let anyError = false;
 
         //Check if Name is filled in
-        if(this.state.name.length <= 0){
+        if(this.state.booking.name.length <= 0){
           this.setState({ nameError: true });
           anyError = true;
         }
 
         //Check if Phone number is filled in
-        if(this.state.phone.length <= 5 || isNaN(this.state.phone)){
+        if(this.state.booking.phone.length <= 5 || isNaN(this.state.booking.phone)){
           this.setState({ phoneError: true });
           anyError = true;
         }
 
         //Check if Email is filled in
-        if(this.state.email.length <= 0 || !this.state.email.includes("@")){
+        if(this.state.booking.email.length <= 0 || !this.state.booking.email.includes("@")){
           this.setState({ emailError: true });
           anyError = true;
         }
@@ -114,7 +120,7 @@ class Bookingform extends Component {
           return;
         }
 
-        const booking = this.state;
+        const booking = this.state.booking;
 
         fetch('http://localhost:8888/insertBooking.php',
         {
@@ -125,9 +131,9 @@ class Bookingform extends Component {
             },
             body: JSON.stringify(booking)
         })
-        .then((postedBooking) => {
-            console.log('Booking success: ', postedBooking);
-        })
+        .catch((error) => {
+            this.setState({ error })
+        });
 
         this.setState({
             isFirstButtonHidden: false,
@@ -140,19 +146,21 @@ class Bookingform extends Component {
 
     handleBack = () => {
         this.setState({
-            date: '',
-            time: '',
-            name: '',
-            phone: '',
-            email: '',
-            numberOfGuests: '1',
+            booking: {
+                date: '',
+                time: '',
+                name: '',
+                phone: '',
+                email: '',
+                numberOfGuests: '1',
+            },
             isFirstButtonHidden: true,
             isSecondButtonHidden: true,
             isCustomerFormHidden: true,
             isFeedbackHidden: true,
             isBookingHidden: false,
             isSearchFormHidden: false
-        })
+        });
     }
 
     handleGDPR = (event) => {
@@ -161,9 +169,24 @@ class Bookingform extends Component {
         });
     }
 
+    handleTimeSitting = (event) => {
+        event.preventDefault();
+        this.setState({
+            booking: {
+                ...this.state.booking,
+                time: event.target.value,
+            },
+            isCustomerFormHidden: false,
+            isSearchFormHidden: true
+        })
+    }
+
     handleChange(event) {
         this.setState({
-            [event.target.name]: event.target.value,
+            booking: {
+                ...this.state.booking,
+                [event.target.name]: event.target.value,
+            },
             nameError: false,
             emailError: false,
             phoneError: false
@@ -183,19 +206,21 @@ class Bookingform extends Component {
             <BookingContainer>
                 <div className="inner-wrap">
                     <div style={bookingFormStyle}>
-                    <BookingLabel text="Reservation"/>
+                    <BookingHeading text="Book a table"/>
                         <div style={searchFormStyle}>
                             <Form className="secondary-background">
-                                <span className="dateLabel">Date</span>
-                                <Input  id="this.selectedDate"
+                                <FormLabel for="datePicker" className="dateLabel" text="Date" />
+                                <Input  id="datePicker"
                                         className="search-date"
-                                        value={this.state.date}
+                                        value={this.state.booking.date}
                                         type="date"
                                         onChange={this.handleChange}
                                         name="date" />
                                 <Button className="button primary" text="Search"
                                         onClick={this.handleSearch}/>
+                                {this.state.dateError && <div className="errorMsg">*Please choose a date</div>}
                             </Form>
+                            {this.state.isFullyBooked}
 
                             <Button className="button secondary"
                                     onClick={this.handleTimeSitting}
@@ -225,7 +250,6 @@ class Bookingform extends Component {
                                     onChange={this.handleChange} />
                             {this.state.emailError && <div className="errorMsg">*Please enter a valid email</div>}
 
-                            {/* <label htmlFor="phone">Phone</label> */}
                             <Input  id="phone"
                                     className="customer-field"
                                     placeholder="Phone"
@@ -234,7 +258,7 @@ class Bookingform extends Component {
                                     onChange={this.handleChange} />
                             {this.state.phoneError && <div className="errorMsg">*Please enter a valid phone number</div>}
 
-                            <label  htmlFor="numberOfGuests" className="guest-label">Number of guests</label>
+                            <FormLabel for="numberOfGuests" className="guest-label" text="Number of guests" />
 
                             <div className="custom-select">
                                 <select id="numberOfGuests"
@@ -248,39 +272,38 @@ class Bookingform extends Component {
                                     <option value="5">5</option>
                                     <option value="6">6</option>
                                 </select>
+                            </div>
+                            <br />
+                            <Input
+                                id="gdpr"
+                                className="customer-field"
+                                placeholder="gdpr"
+                                type="checkbox"
+                                value={this.state.gdprCheck}
+                                onChange={this.handleGDPR}
+                                name="gdpr" />
 
-                                <br /><br /><br />
-                                <Input
-                                  id="gdpr"
-                                  className="customer-field"
-                                  placeholder="gdpr"
-                                  type="checkbox"
-                                  value={this.state.gdprCheck}
-                                  onChange={this.handleGDPR}
-                                  name="gdpr" />
-
-                                <label  htmlFor="numberOfGuests">I consent to the processing of my personal data</label>
-                                {this.state.gdprError && <div className="errorMsg">*You need to accept before booking</div>}
+                            <FormLabel for="gdpr" text="I consent to the processing of my personal data" />
+                            {this.state.gdprError && <div className="errorMsg">*You need to accept before booking</div>}
 
 
                             <Button text="Book"
-                                    className="button secondary"
-                                    onClick={this.handleBooking} />
+                                className="button secondary"
+                                onClick={this.handleBooking} />
                             <Button text="Cancel"
-                                    className="button ghost" />
-                            </div>
+                                className="button ghost" />
                         </Form>
                     </div>
 
                     <div  style={feedbackStyle}>
-                        <BookingLabel text="See you soon!" />
+                        <BookingHeading text="See you soon!" />
                         <ul className="secondary-background">
-                            <li>{this.state.name}</li>
-                            <li>{this.state.phone}</li>
-                            <li>{this.state.email}</li>
-                            <li>{this.state.date}</li>
-                            <li>{this.state.time}</li>
-                            <li>{this.state.numberOfGuests}</li>
+                            <li>{this.state.booking.name}</li>
+                            <li>{this.state.booking.phone}</li>
+                            <li>{this.state.booking.email}</li>
+                            <li>{this.state.booking.date}</li>
+                            <li>{this.state.booking.time}</li>
+                            <li>{this.state.booking.numberOfGuests}</li>
                         </ul>
                         <Button text="Back"
                                 className="button secondary"
