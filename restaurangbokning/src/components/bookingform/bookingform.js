@@ -122,9 +122,7 @@ class Bookingform extends Component {
             },
             body: JSON.stringify(booking)
         })
-        .then((postedBooking) => {
-            console.log('Booking success: ', postedBooking);
-        })
+        .catch(() => {});
 
         this.setState({
             isFirstButtonHidden: false,
@@ -197,7 +195,7 @@ class Bookingform extends Component {
             <BookingContainer>
                 <div className="inner-wrap">
                     <div style={bookingFormStyle}>
-                    <BookingHeading text="Reservation"/>
+                    <BookingHeading text="Book a table"/>
                         <div style={searchFormStyle}>
                             <Form className="secondary-background">
                                 <FormLabel for="datePicker" className="dateLabel" text="Date" />

@@ -2,7 +2,7 @@ import React from 'react';
 
 function FormLabel(props) {
     return(
-        <label for={props.for} class={props.className}>{props.text}</label>
+        <label htmlFor={props.for} className={props.className}>{props.text}</label>
     )
 }
 
