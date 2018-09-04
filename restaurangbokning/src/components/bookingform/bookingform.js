@@ -12,12 +12,14 @@ class Bookingform extends Component {
         super(props);
 
         this.state = {
-            date: '',
-            time: '',
-            name: '',
-            phone: '',
-            email: '',
-            numberOfGuests: '1',
+            booking: {
+                date: '',
+                time: '',
+                name: '',
+                phone: '',
+                email: '',
+                numberOfGuests: '1',
+            },
             isFirstButtonHidden: true,
             isSecondButtonHidden: true,
             isCustomerFormHidden: true,
@@ -29,6 +31,7 @@ class Bookingform extends Component {
             phoneError: false,
             emailError: false,
             gdprError: false,
+            dateError: false
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -36,49 +39,45 @@ class Bookingform extends Component {
     handleSearch = (event) => {
         event.preventDefault();
 
-        this.setState({
-            isFirstButtonHidden: true,
-            isSecondButtonHidden: true,
-            isCustomerFormHidden: true
-        });
-
-        const selectedDate = this.state.date;
-
-        fetch('http://localhost:8888/searchDate.php?date=' + selectedDate)
-        .then(response => response.json())
-        .then((data) => {
-            const timeList = data.map((singleTime) => singleTime.time);
-
-            let firstSitting = 0;
-            let secondSitting = 0;
-
-            if(data.length < 30){
-                for(let time of timeList) {
-                    if (time === '18:00:00') {
-                        firstSitting++;
+        if(this.state.booking.date){
+            this.setState({
+                isFirstButtonHidden: true,
+                isSecondButtonHidden: true,
+                isCustomerFormHidden: true,
+                dateError: false
+            });
+    
+            const selectedDate = this.state.booking.date;
+    
+            fetch('http://localhost:8888/searchDate.php?date=' + selectedDate)
+            .then(response => response.json())
+            .then((data) => {
+                const timeList = data.map((singleTime) => singleTime.time);
+    
+                let firstSitting = 0;
+                let secondSitting = 0;
+    
+                if(data.length < 30){
+                    for(let time of timeList) {
+                        if (time === '18:00:00') {
+                            firstSitting++;
+                        }
+                        else {
+                            secondSitting++;
+                        }
                     }
-                    else {
-                        secondSitting++;
+    
+                    if(firstSitting < 15) {
+                        this.setState({ isFirstButtonHidden: false })
+                    }
+                    if(secondSitting < 15) {
+                        this.setState({ isSecondButtonHidden: false })
                     }
                 }
-
-                if(firstSitting < 15) {
-                    this.setState({ isFirstButtonHidden: false })
-                }
-                if(secondSitting < 15) {
-                    this.setState({ isSecondButtonHidden: false })
-                }
-            }
-        });
-    }
-
-    handleTimeSitting = (event) => {
-        event.preventDefault();
-        this.setState({
-            time: event.target.value,
-            isCustomerFormHidden: false,
-            isSearchFormHidden: true
-        })
+            });
+        }else{
+            this.setState({ dateError: true });
+          }
     }
 
     handleBooking = (event) => {
@@ -87,19 +86,19 @@ class Bookingform extends Component {
         let anyError = false;
 
         //Check if Name is filled in
-        if(this.state.name.length <= 0){
+        if(this.state.booking.name.length <= 0){
           this.setState({ nameError: true });
           anyError = true;
         }
 
         //Check if Phone number is filled in
-        if(this.state.phone.length <= 5 || isNaN(this.state.phone)){
+        if(this.state.booking.phone.length <= 5 || isNaN(this.state.booking.phone)){
           this.setState({ phoneError: true });
           anyError = true;
         }
 
         //Check if Email is filled in
-        if(this.state.email.length <= 0 || !this.state.email.includes("@")){
+        if(this.state.booking.email.length <= 0 || !this.state.booking.email.includes("@")){
           this.setState({ emailError: true });
           anyError = true;
         }
@@ -114,7 +113,7 @@ class Bookingform extends Component {
           return;
         }
 
-        const booking = this.state;
+        const booking = this.state.booking;
 
         fetch('http://localhost:8888/insertBooking.php',
         {
@@ -140,12 +139,14 @@ class Bookingform extends Component {
 
     handleBack = () => {
         this.setState({
-            date: '',
-            time: '',
-            name: '',
-            phone: '',
-            email: '',
-            numberOfGuests: '1',
+            booking: {
+                date: '',
+                time: '',
+                name: '',
+                phone: '',
+                email: '',
+                numberOfGuests: '1',
+            },
             isFirstButtonHidden: true,
             isSecondButtonHidden: true,
             isCustomerFormHidden: true,
@@ -161,9 +162,24 @@ class Bookingform extends Component {
         });
     }
 
+    handleTimeSitting = (event) => {
+        event.preventDefault();
+        this.setState({
+            booking: {
+                ...this.state.booking,
+                time: event.target.value,
+            },
+            isCustomerFormHidden: false,
+            isSearchFormHidden: true
+        })
+    }
+
     handleChange(event) {
         this.setState({
-            [event.target.name]: event.target.value,
+            booking: {
+                ...this.state.booking,
+                [event.target.name]: event.target.value,
+            },
             nameError: false,
             emailError: false,
             phoneError: false
@@ -189,12 +205,13 @@ class Bookingform extends Component {
                                 <span className="dateLabel">Date</span>
                                 <Input  id="this.selectedDate"
                                         className="search-date"
-                                        value={this.state.date}
+                                        value={this.state.booking.date}
                                         type="date"
                                         onChange={this.handleChange}
                                         name="date" />
                                 <Button className="button primary" text="Search"
                                         onClick={this.handleSearch}/>
+                                {this.state.dateError && <div className="errorMsg">*Please choose a date</div>}
                             </Form>
 
                             <Button className="button secondary"
@@ -275,12 +292,12 @@ class Bookingform extends Component {
                     <div  style={feedbackStyle}>
                         <BookingLabel text="See you soon!" />
                         <ul className="secondary-background">
-                            <li>{this.state.name}</li>
-                            <li>{this.state.phone}</li>
-                            <li>{this.state.email}</li>
-                            <li>{this.state.date}</li>
-                            <li>{this.state.time}</li>
-                            <li>{this.state.numberOfGuests}</li>
+                            <li>{this.state.booking.name}</li>
+                            <li>{this.state.booking.phone}</li>
+                            <li>{this.state.booking.email}</li>
+                            <li>{this.state.booking.date}</li>
+                            <li>{this.state.booking.time}</li>
+                            <li>{this.state.booking.numberOfGuests}</li>
                         </ul>
                         <Button text="Back"
                                 className="button secondary"
