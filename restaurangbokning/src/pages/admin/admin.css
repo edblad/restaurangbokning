@@ -1,4 +1,10 @@
 .adminWrap {
     background-color: #F4F5F9;
-    height: 100vh;
-}
+    height: calc(100vh - 67px);
+  }
+
+  @media screen and (min-width: 780px) {
+    .adminWrap{
+      height: calc(100vh - 50px);
+    }
+  }
