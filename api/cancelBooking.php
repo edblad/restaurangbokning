@@ -17,7 +17,7 @@ if(sizeof($theBooking) == 0){
 }
 
 //Delete the booking
-$deleteBooking = 'DELETE FROM bookings WHERE bookings.bookings_id="' . $theBooking[0]['bookings_id'] . '"';
+$deleteBooking = 'DELETE FROM bookings WHERE bookings.booking_id="' . $theBooking[0]['booking_id'] . '"';
 $bookingStatement = $pdo->prepare($deleteBooking);
 $bookingStatement->execute();
 

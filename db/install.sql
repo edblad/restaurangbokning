@@ -20,12 +20,12 @@ ENGINE = InnoDB;
 -- Table `restaurang`.`bookings`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restaurang`.`bookings` (
-  `bookings_id` INT NOT NULL AUTO_INCREMENT,
+  `booking_id` INT NOT NULL AUTO_INCREMENT,
   `date` VARCHAR(45) NOT NULL,
   `time` VARCHAR(45) NOT NULL,
   `amount_of_people` VARCHAR(1) NOT NULL,
   `customer_id` INT NOT NULL,
-  PRIMARY KEY (`bookings_id`),
+  PRIMARY KEY (`booking_id`),
   INDEX `fk_customer_id_idx` (`customer_id` ASC),
   CONSTRAINT `fk_customer_id`
     FOREIGN KEY (`customer_id`)
