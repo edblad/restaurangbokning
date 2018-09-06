@@ -28,7 +28,7 @@ $customerStatement->execute();
 
 //Send booking cancellation email to customer
  $headers = "From: bookingconfirmation@restaurant.com";
- @mail($theBooking[0]['email'],"Booking cancelled","<h1>Thank you for your cancellation.</h1>", $headers);
+ @mail($theBooking[0]['email'],"Booking cancelled","Thank you for your cancellation.", $headers);
 
 echo json_encode([ "removed" => true ]);
 ?>
