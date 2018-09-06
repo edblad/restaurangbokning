@@ -83,15 +83,23 @@ class Bookingform extends Component {
             }
 
             if(firstSitting < 15) {
-                this.setState({ isFirstButtonHidden: false })
+                this.setState({ 
+                    isFirstButtonHidden: false,
+                    isFullyBooked: ''
+                })
             }
             if(secondSitting < 15) {
-                this.setState({ isSecondButtonHidden: false })
+                this.setState({ 
+                    isSecondButtonHidden: false,
+                    isFullyBooked: ''
+                })
             }
         }else{
             this.setState({
-                isFullyBooked: <p>Today we are fully booked. Please try another day!</p>
-                });
+                isFullyBooked: <p>Today we are fully booked. Please try another day!</p>,
+                isFirstButtonHidden: true,
+                isSecondButtonHidden: true
+            });
         }
     }
 
